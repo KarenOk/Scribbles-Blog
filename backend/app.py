@@ -1,6 +1,17 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from models import setup_db, Post, Comment
+
+
+def paginator(request, data, items_per_page):
+    page = request.args.get("page", 1, type=int)
+    end = page * items_per_page
+    start = end - items_per_page
+
+    if len(data) < start:
+        abort(404)
+
+    return [d.format() for d in data[start:end]]
 
 
 def create_app():
@@ -16,6 +27,18 @@ def create_app():
 
         return jsonify(post.format())
         # return "Welcome to Scribbles API! We're lucky to have you."
+
+    @app.route("/posts")
+    def get_posts():
+        posts = Post.query.all()
+        paginated_posts = paginator(
+            request=request, data=posts, items_per_page=5)
+
+        return jsonify({
+            "success": True,
+            "total_posts": len(posts),
+            "posts": paginated_posts
+        })
 
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
 
