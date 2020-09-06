@@ -124,6 +124,21 @@ def create_app():
         
     """
 
+    @app.route("/posts/<int:post_id>/comments")
+    def get_comments_for_a_post(post_id):
+        post = Post.query.get(post_id)
+        if not post:
+            abort(404)
+
+        paginated_comments = paginator(
+            request=request, data=post.comments, items_per_page=10)
+
+        return jsonify({
+            "success": True,
+            "total_comments": len(post.comments),
+            "comments": paginated_comments
+        })
+
     @app.route("/posts/<int:post_id>/comments", methods=["POST"])
     def create_comment(post_id):
         post = Post.query.get(post_id)

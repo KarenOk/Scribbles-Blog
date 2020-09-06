@@ -150,6 +150,38 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["error"], 404)
         self.assertFalse(data["success"])
 
+    def test_get_paginated_comments_for_a_post(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        # Create comment under a post
+        res = self.client().post(
+            f"/posts/{post_id}/comments", json=self.new_comment)
+        data = json.loads(res.data)
+        comment_id = data["created"]
+
+        res = self.client().get(f"/posts/{post_id}/comments")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(data["comments"]), 1)
+        self.assertTrue(data["success"])
+
+    def test_get_paginated_comments_for_a_post_invalid_page(self):
+        res = self.client().get("/posts/1/comments?page=1000")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertEqual(data["success"], False)
+
+    def test_get_paginated_comments_for_a_post_not_found(self):
+        res = self.client().get("/posts/1000/comments")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertEqual(data["success"], False)
+
     def test_create_comment_for_a_post(self):
         # Create new post
         res = self.client().post("/posts", json=self.new_post)
