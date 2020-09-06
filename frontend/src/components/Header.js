@@ -27,7 +27,11 @@ const Header = () => {
 						</a>
 					)}
 					{isAuthenticated && (
-						<a href="#!" className="danger" onClick={() => logout()}>
+						<a
+							href="#!"
+							className="danger"
+							onClick={() => logout({ returnTo: window.location.origin })}
+						>
 							LOGOUT
 						</a>
 					)}
