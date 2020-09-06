@@ -62,6 +62,37 @@ def create_app():
             "post": post.format()
         })
 
+    @app.route("/posts/<int:post_id>", methods=["PATCH"])
+    def update_post(post_id):
+        post = Post.query.get(post_id)
+
+        if not post:
+            abort(404)
+
+        data = request.get_json()
+        title = data.get("title", None)
+        content = data.get("content", None)
+
+        if not title and not content:
+            abort(400)
+
+        try:
+            if bool(title):
+                post.title = title
+            if bool(content):
+                post.content = content
+            post.update()
+
+        except Exception:
+            db.session.rollback()
+            abort(500)
+
+        return jsonify({
+            "success": True,
+            "updated": post.id,
+            "post": post.format()
+        })
+
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
 
     @app.errorhandler(400)

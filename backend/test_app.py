@@ -67,6 +67,7 @@ class ScribblesTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data["error"], 400)
+        self.assertFalse(data["success"])
 
         # title exceeds char limit
         res = self.client().post("/posts", json={
@@ -77,6 +78,54 @@ class ScribblesTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data["error"], 400)
+        self.assertFalse(data["success"], 400)
+
+    def test_update_post_success(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        # Update only title
+        res = self.client().patch(
+            f"/posts/{post_id}", json={"title": "Updated title"})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["updated"], post_id)
+        self.assertTrue(data["success"])
+
+        # Update only content
+        res = self.client().patch(
+            f"/posts/{post_id}", json={"content": "Updated content"})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["updated"], post_id)
+        self.assertTrue(data["success"])
+
+        # Check the db was updated accordingly
+        post = Post.query.get(post_id)
+        self.assertEqual(post.title, "Updated title")
+        self.assertEqual(post.content, "Updated content")
+
+    def test_update_post_bad_request(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        res = self.client().patch(f"/posts/{post_id}", json={})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data["error"], 400)
+        self.assertFalse(data["success"])
+
+    def test_update_post_not_found(self):
+        res = self.client().patch(f"/posts/1000", json=self.new_post)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertFalse(data["success"])
 
 
 if __name__ == "__main__":
