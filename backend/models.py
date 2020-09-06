@@ -1,5 +1,6 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 database_path = os.environ["DATABASE_URL"]
 db = SQLAlchemy()
