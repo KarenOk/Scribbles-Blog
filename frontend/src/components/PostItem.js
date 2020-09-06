@@ -29,6 +29,10 @@ const PostItem = ({ post }) => {
 			</p>
 
 			<p className="intro"> {post.content} </p>
+
+			<a href="#!" className="read-more">
+				Read more
+			</a>
 		</article>
 	);
 };
