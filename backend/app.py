@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-from models import setup_db, Post, Comment
+from models import setup_db, db, Post, Comment
 
 
 def paginator(request, data, items_per_page):
@@ -40,6 +40,28 @@ def create_app():
             "posts": paginated_posts
         })
 
+    @app.route("/posts", methods=["POST"])
+    def create_post():
+        data = request.get_json()
+        title = data.get("title", None)
+        content = data.get("content", None)
+
+        if not content or not title:
+            abort(400)
+
+        try:
+            post = Post(title=title, content=content)
+            post.insert()
+        except Exception:
+            db.session.rollback()
+            abort(500)
+
+        return jsonify({
+            "success": True,
+            "created": post.id,
+            "post": post.format()
+        })
+
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
 
     @app.errorhandler(400)
@@ -54,7 +76,7 @@ def create_app():
     def not_found(error):
         return jsonify({
             "success": False,
-            "error": 400,
+            "error": 404,
             "message": "The requested resource was not found."
         }), 404
 
