@@ -1,0 +1,76 @@
+/* General */
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+a, a:active, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Main app */
+
+.app {}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px;
+    margin: 0 auto;
+}
+
+/*  Header Section  */
+
+header {
+    text-align: center;
+    font-family: 'Grandstander', cursive;
+    font-size: 16px;
+}
+
+header img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+header h1 {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 3em;
+}
+
+header p {
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-family: 'Overlock', cursive;
+}
+
+nav .routes a {
+    margin: 0 5px;
+}
+
+nav .routes a:active, nav .routes a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+nav .social img {
+    width: 30px;
+    height: 30px;
+}
