@@ -12,6 +12,10 @@
     justify-content: center;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
 a, a:active, a:hover {
     text-decoration: none;
     color: inherit;
@@ -24,7 +28,7 @@ a, a:active, a:hover {
 }
 
 .container {
-    width: 100%;
+    width: 90%;
     max-width: 800px;
     margin: 20px;
     margin: 0 auto;
@@ -48,6 +52,7 @@ header {
     text-align: center;
     font-family: 'Grandstander', cursive;
     font-size: 16px;
+    padding: 5px 10px 0;
 }
 
 header img {
@@ -72,9 +77,15 @@ nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
     font-family: 'Overlock', cursive;
     margin-bottom: 30px;
+}
+
+nav .routes {
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 nav .routes a {
@@ -109,7 +120,7 @@ nav .social img {
     padding: 15px 30px;
     margin: 30px 0;
     cursor: pointer;
-    height: 260px;
+    min-height: 260px;
     box-sizing: border-box;
 }
 
@@ -165,4 +176,10 @@ footer a {
 
 footer a:hover {
     transform: rotate(360deg);
+}
+
+@media only screen and (max-width: 500px) {
+    header {
+        font-size: 14px;
+    }
 }
