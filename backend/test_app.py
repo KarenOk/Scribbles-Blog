@@ -61,7 +61,18 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertIsNotNone(post)
 
     def test_create_post_bad_request(self):
+        # missing keys
         res = self.client().post("/posts", json={})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data["error"], 400)
+
+        # title exceeds char limit
+        res = self.client().post("/posts", json={
+            "title": "Some extremely long title that clearly exceeds the specified char limit. Some extremely long title that clearly exceeds the specified char limit.",
+            "content": "Some content"
+        })
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 400)

@@ -46,7 +46,7 @@ def create_app():
         title = data.get("title", None)
         content = data.get("content", None)
 
-        if not content or not title:
+        if not content or not title or len(str(title)) > 140:
             abort(400)
 
         try:
