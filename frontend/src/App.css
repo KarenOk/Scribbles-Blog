@@ -59,7 +59,7 @@ header p {
 nav {
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     font-family: 'Overlock', cursive;
     margin-bottom: 30px;
@@ -67,6 +67,11 @@ nav {
 
 nav .routes a {
     margin: 0 5px;
+}
+
+nav a.danger {
+    color: red;
+    font-weight: bolder;
 }
 
 nav .routes a:active, nav .routes a.active {
@@ -92,7 +97,8 @@ nav .social img {
     padding: 15px 30px;
     margin: 30px 0;
     cursor: pointer;
-    height: 240px;
+    height: 260px;
+    box-sizing: border-box;
 }
 
 .post-item:hover {
@@ -102,6 +108,7 @@ nav .social img {
 .post-item h3 {
     font-family: 'Grandstander', cursive;
     font-size: 1.8em;
+    margin: 20px 0 10px;
     text-transform: uppercase;
 }
 

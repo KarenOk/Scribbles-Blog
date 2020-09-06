@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import logo from "../logo.png";
 import github from "../images/github.png";
 import twitter from "../images/twitter.png";
@@ -7,6 +8,7 @@ import linkedin from "../images/linkedin.png";
 import instagram from "../images/instagram.png";
 
 const Header = () => {
+	const { loginWithRedirect, logout } = useAuth0();
 	return (
 		<header>
 			<div>
@@ -19,8 +21,12 @@ const Header = () => {
 					<a href="#!" className="active">
 						POSTS
 					</a>
-					<a href="#!"> LOGIN </a>
-					<a href="#!"> REGISTER </a>
+					<a href="#!" onClick={() => loginWithRedirect()}>
+						LOGIN/REGISTER
+					</a>
+					<a href="#!" className="danger" onClick={() => logout()}>
+						LOGOUT
+					</a>
 				</div>
 				<div className="social">
 					<a href="#!">
