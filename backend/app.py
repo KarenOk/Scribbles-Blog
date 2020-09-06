@@ -118,6 +118,36 @@ def create_app():
             "deleted": post_id
         })
 
+    """ 
+       
+        Endpoints to manage comments
+        
+    """
+
+    @app.route("/posts/<int:post_id>/comments", methods=["POST"])
+    def create_comment(post_id):
+        post = Post.query.get(post_id)
+        if not post:
+            abort(404)
+
+        data = request.get_json()
+        comment_text = data.get("comment", None)
+        if not comment_text:
+            abort(400)
+
+        try:
+            comment = Comment(comment=comment_text, post_id=post_id)
+            comment.insert()
+        except:
+            db.session.rollback()
+            abort(500)
+
+        return jsonify({
+            "success": True,
+            "created": comment.id,
+            "comment": comment.format()
+        })
+
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
 
     @app.errorhandler(400)

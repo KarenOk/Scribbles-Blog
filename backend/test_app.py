@@ -150,6 +150,34 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["error"], 404)
         self.assertFalse(data["success"])
 
+    def test_create_comment_for_a_post(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        res = self.client().post(
+            f"/posts/{post_id}/comments", json=self.new_comment)
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["comment"]["post_id"], post_id)
+        self.assertTrue(data["success"])
+
+        post = Post.query.get(post_id).format()
+        self.assertEqual(len(post["comments"]), 1)  # check number of comment
+
+    def test_create_comment_for_a_post_bad_request(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        res = self.client().post(f"/posts/{post_id}/comments", json={})
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data["error"], 400)
+        self.assertFalse(data["success"])
+
 
 if __name__ == "__main__":
     unittest.main()
