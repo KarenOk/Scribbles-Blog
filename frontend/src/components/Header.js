@@ -24,19 +24,39 @@ const Header = () => {
 				</div>
 				<div className="social">
 					<a href="#!">
-						<img className="social" src={twitter} />
+						<img
+							className="social"
+							src={twitter}
+							alt="Reach out to us on twitter"
+						/>
 					</a>
 					<a href="#!">
-						<img className="social" src={facebook} />
+						<img
+							className="social"
+							src={facebook}
+							alt=" Reach out to us on facebook"
+						/>
 					</a>
 					<a href="#!">
-						<img className="social" src={instagram} />
+						<img
+							className="social"
+							src={instagram}
+							alt=" Reach out to us on instagram"
+						/>
 					</a>
 					<a href="#!">
-						<img className="social" src={linkedin} />
+						<img
+							className="social"
+							src={linkedin}
+							alt=" Reach out to us on linkedin"
+						/>
 					</a>
 					<a href="#!">
-						<img className="social" src={github} />
+						<img
+							className="social"
+							src={github}
+							alt=" Reach out to us on github"
+						/>
 					</a>
 				</div>
 			</nav>
