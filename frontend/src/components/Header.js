@@ -8,7 +8,7 @@ import linkedin from "../images/linkedin.png";
 import instagram from "../images/instagram.png";
 
 const Header = () => {
-	const { loginWithRedirect, logout } = useAuth0();
+	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 	return (
 		<header>
 			<div>
@@ -21,12 +21,16 @@ const Header = () => {
 					<a href="#!" className="active">
 						POSTS
 					</a>
-					<a href="#!" onClick={() => loginWithRedirect()}>
-						LOGIN/REGISTER
-					</a>
-					<a href="#!" className="danger" onClick={() => logout()}>
-						LOGOUT
-					</a>
+					{!isAuthenticated && (
+						<a href="#!" onClick={() => loginWithRedirect()}>
+							LOGIN/REGISTER
+						</a>
+					)}
+					{isAuthenticated && (
+						<a href="#!" className="danger" onClick={() => logout()}>
+							LOGOUT
+						</a>
+					)}
 				</div>
 				<div className="social">
 					<a href="#!">

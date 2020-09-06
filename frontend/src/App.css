@@ -30,6 +30,18 @@ a, a:active, a:hover {
     margin: 0 auto;
 }
 
+/* Banner */
+
+.banner {
+    text-align: center;
+    font-size: 1.1em;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: turquoise;
+}
+
 /*  Header Section  */
 
 header {
