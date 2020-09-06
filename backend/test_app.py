@@ -8,7 +8,7 @@ from models import setup_db, Post, Comment
 
 
 class ScribblesTestCase(unittest.TestCase):
-    """This class represents test case for Scribbles. """
+    """This class represents test cases for Scribbles blog resources. """
 
     def setUp(self):
         """Initialize app and test variables."""
