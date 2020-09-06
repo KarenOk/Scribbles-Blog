@@ -28,6 +28,12 @@ def create_app():
         return jsonify(post.format())
         # return "Welcome to Scribbles API! We're lucky to have you."
 
+    """ 
+       
+        Endpoints to manage posts
+        
+    """
+
     @app.route("/posts")
     def get_posts():
         posts = Post.query.all()
@@ -91,6 +97,25 @@ def create_app():
             "success": True,
             "updated": post.id,
             "post": post.format()
+        })
+
+    @app.route("/posts/<int:post_id>", methods=["DELETE"])
+    def delete_post(post_id):
+        post = Post.query.get(post_id)
+
+        if not post:
+            abort(404)
+
+        try:
+            post_id = post.id
+            post.delete()
+        except:
+            db.session.rollback()
+            abort(500)
+
+        return jsonify({
+            "success": True,
+            "deleted": post_id
         })
 
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error

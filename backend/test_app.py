@@ -127,6 +127,29 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["error"], 404)
         self.assertFalse(data["success"])
 
+    def test_delete_post_success(self):
+        # Create new post
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+
+        res = self.client().delete(f"/posts/{post_id}")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["deleted"], post_id)
+        self.assertTrue(data["success"])
+
+        post = Post.query.get(post_id)
+        self.assertIsNone(post)
+
+    def test_delete_post_not_found(self):
+        res = self.client().delete(f"/posts/1000", json=self.new_post)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertFalse(data["success"])
+
 
 if __name__ == "__main__":
     unittest.main()
