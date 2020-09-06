@@ -46,6 +46,7 @@ header h1 {
     display: inline-block;
     margin-bottom: 0;
     font-size: 3em;
+    color: rgb(1, 1, 126);
 }
 
 header p {
@@ -59,6 +60,7 @@ nav {
     justify-content: space-evenly;
     align-items: center;
     font-family: 'Overlock', cursive;
+    margin-bottom: 30px;
 }
 
 nav .routes a {
@@ -73,4 +75,42 @@ nav .routes a:active, nav .routes a.active {
 nav .social img {
     width: 30px;
     height: 30px;
+}
+
+/* Posts */
+
+.posts {
+    width: 100%;
+    font-size: 16px;
+}
+
+.post-item {
+    width: 100%;
+    border: 3px solid black;
+    padding: 15px 30px;
+    margin: 30px 0;
+    cursor: pointer;
+    height: 220px;
+}
+
+.post-item:hover {
+    background-color: #eee;
+}
+
+.post-item h3 {
+    font-family: 'Grandstander', cursive;
+    font-size: 1.8em;
+    text-transform: uppercase;
+}
+
+.post-item .highlight {
+    font-weight: bolder;
+}
+
+.post-item .intro {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
