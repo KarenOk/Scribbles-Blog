@@ -48,8 +48,8 @@ class Post(db.Model):
             "id": self.id,
             "title": self.title,
             "content": self.content,
-            "date_created": self.date_created,
-            "last_modified": self.last_modified,
+            "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
+            "last_modified": self.last_modified.strftime("%d/%m/%Y %H:%M:%S"),
             "comments": self.comments
         }
 
@@ -82,6 +82,6 @@ class Comment(db.Model):
         return {
             "id": self.id,
             "comment": self.comment,
-            "date_created": self.date_created,
+            "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "post_id": self.post_id,
         }
