@@ -26,7 +26,7 @@ class Post(db.Model):
     comments = db.relationship(
         "Comment",  backref="post", cascade="all, delete-orphan")
 
-    def __init__(self, title, content, date_created, last_modified):
+    def __init__(self, title, content, date_created=datetime.utcnow(), last_modified=datetime.utcnow()):
         self.title = title
         self.content = content
         self.date_created = date_created
