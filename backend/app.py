@@ -261,11 +261,11 @@ def create_app():
 
     @app.errorhandler(AuthError)
     def auth_error(error):
-        print(error)
         return jsonify({
             "success": False,
             "error": error.status_code,
-            "error": error.error["message"]}), 401
+            "message": error.error["message"]
+        }), error.status_code
 
     return app
 

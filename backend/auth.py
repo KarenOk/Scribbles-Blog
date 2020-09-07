@@ -6,10 +6,10 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTHO_DOMAIN = os.environ["AUTH0_DOMAIN"]
+AUTH0_DOMAIN = os.environ["AUTH0_DOMAIN"]
 API_AUDIENCE = os.environ["API_AUDIENCE"]
 API_AUDIENCE = "scribbles-blog"
-ALGORITHMS = ["RSA256"]
+ALGORITHMS = ["RS256"]
 
 
 class AuthError(Exception):
@@ -36,7 +36,7 @@ def get_token_from_header():
 
     parts = authorization_header.split()
 
-    if len(parts != 2) or parts[0].lower() != "bearer":
+    if len(parts) != 2 or parts[0].lower() != "bearer":
         raise AuthError({
             "code": "invalid_authorization_header",
             "message": "Authorization header must be of the format 'Bearer token'."
@@ -50,8 +50,7 @@ def verify_and_decode_token(token):
     """
         Verify token using Auth0 and return payload if valid
     """
-
-    jwks_json_url = urlopen(f"https://{AUTH0_DOMAIN}/.well_known/jwks.json")
+    jwks_json_url = urlopen(f"https://{AUTH0_DOMAIN}/.well-known/jwks.json")
     jwks = json.loads(jwks_json_url.read())
     unverified_header = jwt.get_unverified_header(token)
 
@@ -101,6 +100,7 @@ def check_for_permission(permission, payload):
     """
         Checks for permission within payload
     """
+    print(payload)
     if "permissions" not in payload:
         raise AuthError({
             "code": "invalid_claims",
@@ -123,8 +123,8 @@ def requires_auth(permission=""):
             """
             token = get_token_from_header()
             payload = verify_and_decode_token(token)
-            check_for_permission(permission, token)
+            check_for_permission(permission, payload)
 
-            func(payload, *args, **kwargs)
+            return func(payload, *args, **kwargs)
         return inner
     return decorator
