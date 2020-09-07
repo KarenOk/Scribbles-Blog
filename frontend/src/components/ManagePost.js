@@ -7,7 +7,18 @@ function ManagePost({ visible, close, createPost }) {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		createPost({ title, content });
+		console.log("entered");
+		if (!title || !content) return;
+		if (title.length > 50) return;
+
+		try {
+			createPost({ title, content });
+			close();
+			setTitle("");
+			setTitle("");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 	return (
 		<Rodal
@@ -18,7 +29,7 @@ function ManagePost({ visible, close, createPost }) {
 			width={null}
 		>
 			<h1> Create a new post </h1>
-			<form id="manage-post">
+			<form id="manage-post" onSubmit={onSubmit}>
 				<div className="form-group">
 					<label htmlFor="title"> Post Title </label>
 					<input
@@ -26,6 +37,7 @@ function ManagePost({ visible, close, createPost }) {
 						name="title"
 						required
 						onChange={(e) => setTitle(e.target.value)}
+						maxLength="50"
 					/>
 				</div>
 
@@ -35,6 +47,7 @@ function ManagePost({ visible, close, createPost }) {
 						id="content"
 						name="content"
 						required
+						value={content}
 						onChange={(e) => setContent(e.target.value)}
 					></textarea>
 				</div>
@@ -42,7 +55,9 @@ function ManagePost({ visible, close, createPost }) {
 
 			<div className="actions">
 				<button onClick={() => close()}> Cancel </button>
-				<button form="manage-post">Submit</button>
+				<button form="manage-post" disabled={!title || !content}>
+					Submit
+				</button>
 			</div>
 		</Rodal>
 	);

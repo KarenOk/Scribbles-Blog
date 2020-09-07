@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
@@ -25,7 +26,7 @@ function App() {
 				setToken(token);
 			})();
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const getPosts = (page) => {
 		setLoadingPosts(true);
@@ -33,6 +34,28 @@ function App() {
 			.then((res) => res.json())
 			.then((res) => {
 				setPosts(res);
+				setLoadingPosts(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				setLoadingPosts(false);
+			});
+	};
+
+	const createPost = (body) => {
+		console.log("jkjfkfk");
+		setLoadingPosts(true);
+		fetch("http://localhost:5000/posts", {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				getPosts();
 				setLoadingPosts(false);
 			})
 			.catch((err) => {
@@ -51,6 +74,8 @@ function App() {
 		);
 	}
 
+	const notify = () => toast("Wow so easy !");
+
 	return (
 		<div className="app">
 			{isAuthenticated && <Banner />}
@@ -62,7 +87,11 @@ function App() {
 			<ManagePost
 				visible={showManagePost}
 				close={() => setShowManagePost(false)}
+				createPost={createPost}
 			/>
+			<button onClick={notify}>Notify !</button>
+
+			<ToastContainer />
 		</div>
 	);
 }

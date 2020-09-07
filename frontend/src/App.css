@@ -25,6 +25,10 @@ a, a:active, a:hover {
     font-weight: bolder;
 }
 
+:disabled {
+    opacity: 0.3;
+}
+
 /* Main app */
 
 .app {
@@ -302,7 +306,7 @@ nav .social img {
 .pagination-cont {
     width: 100%;
     display: flex;
-    margin-bottom: 30px;
+    margin: 20px 0 30px;
 }
 
 .pagination {
