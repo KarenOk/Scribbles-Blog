@@ -6,24 +6,19 @@ import logo from "../logo.png";
 
 const Posts = ({ posts, getPosts, loading }) => {
 	const POSTS_PER_PAGE = 5;
-	const [pageNo, setPageNo] = useState(0);
 	const [pageCount, setPageCount] = useState(0);
 
 	useEffect(() => {
 		getPosts();
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (posts) setPageCount(Math.ceil(posts.total_posts / POSTS_PER_PAGE));
-	}, [posts]);
-
-	useEffect(() => {
-		getPosts(pageNo + 1);
-	}, [pageNo]);
+	}, [posts]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handlePageClick = (e) => {
 		const selectedPage = e.selected;
-		setPageNo(selectedPage);
+		getPosts(selectedPage + 1);
 	};
 
 	if (loading) {

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import Rodal from "rodal";
 
-function ManagePost({ visible, close }) {
+function ManagePost({ visible, close, createPost }) {
+	const [title, setTitle] = useState("");
+	const [content, setContent] = useState("");
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		createPost({ title, content });
+	};
 	return (
 		<Rodal
 			visible={visible}
@@ -14,12 +21,22 @@ function ManagePost({ visible, close }) {
 			<form id="manage-post">
 				<div className="form-group">
 					<label htmlFor="title"> Post Title </label>
-					<input id="title" name="title" required />
+					<input
+						id="title"
+						name="title"
+						required
+						onChange={(e) => setTitle(e.target.value)}
+					/>
 				</div>
 
 				<div className="form-group">
 					<label htmlFor="title"> Post Content </label>
-					<textarea id="content" name="content" required></textarea>
+					<textarea
+						id="content"
+						name="content"
+						required
+						onChange={(e) => setContent(e.target.value)}
+					></textarea>
 				</div>
 			</form>
 
