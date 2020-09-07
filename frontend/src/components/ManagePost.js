@@ -15,7 +15,7 @@ function ManagePost({ visible, close, createPost }) {
 			createPost({ title, content });
 			close();
 			setTitle("");
-			setTitle("");
+			setContent("");
 		} catch (err) {
 			console.log(err);
 		}
@@ -36,6 +36,7 @@ function ManagePost({ visible, close, createPost }) {
 						id="title"
 						name="title"
 						required
+						value={title}
 						onChange={(e) => setTitle(e.target.value)}
 						maxLength="50"
 					/>
