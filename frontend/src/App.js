@@ -6,14 +6,17 @@ import Posts from "./components/Posts";
 import Footer from "./components/Footer";
 import Banner from "./components/Banner";
 import logo from "./logo.png";
+import ManagePost from "./components/ManagePost";
 
 function App() {
 	const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+
 	const [token, setToken] = useState(null);
+
 	const [posts, setPosts] = useState(null);
 	const [loadingPosts, setLoadingPosts] = useState(false);
 
-	useEffect(() => {}, []);
+	const [showManagePost, setShowManagePost] = useState(false);
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -23,10 +26,6 @@ function App() {
 			})();
 		}
 	}, [isAuthenticated]);
-
-	useEffect(() => {
-		console.log(posts);
-	}, [posts]);
 
 	const getPosts = (page) => {
 		setLoadingPosts(true);
@@ -56,10 +55,14 @@ function App() {
 		<div className="app">
 			{isAuthenticated && <Banner />}
 			<div className="container">
-				<Header />
+				<Header showCreatePost={() => setShowManagePost(true)} />
 				<Posts posts={posts} getPosts={getPosts} loading={loadingPosts} />
 			</div>
 			<Footer />
+			<ManagePost
+				visible={showManagePost}
+				close={() => setShowManagePost(false)}
+			/>
 		</div>
 	);
 }

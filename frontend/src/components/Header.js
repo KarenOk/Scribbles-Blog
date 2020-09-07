@@ -7,8 +7,8 @@ import facebook from "../images/facebook.png";
 import linkedin from "../images/linkedin.png";
 import instagram from "../images/instagram.png";
 
-const Header = () => {
-	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+const Header = ({ showCreatePost }) => {
+	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	return (
 		<header>
 			<div>
@@ -26,6 +26,12 @@ const Header = () => {
 							LOGIN/REGISTER
 						</a>
 					)}
+					{isAuthenticated &&
+						user["https://scribbles-blog.com/roles"][0] === "author" && (
+							<a href="#!" onClick={showCreatePost}>
+								CREATE POST
+							</a>
+						)}
 					{isAuthenticated && (
 						<a
 							href="#!"

@@ -95,7 +95,7 @@ nav .routes {
 }
 
 nav .routes a {
-    margin: 0 5px;
+    margin-right: 15px;
 }
 
 nav a.danger {
@@ -175,6 +175,88 @@ nav .social img {
 
 .post-item .read-more:hover {
     color: rgb(1, 1, 126);
+}
+
+/*  Manage posts */
+
+.manage-post .rodal-dialog {
+    max-width: 500px;
+    width: 90%;
+    height: 90vh;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.manage-post .rodal-close:hover {
+    transform: scale(1.2);
+}
+
+.manage-post .rodal-close:after, .manage-post .rodal-close:before {
+    background: red;
+}
+
+.manage-post h1 {
+    font-size: 1.8em;
+    font-family: 'Grandstander', cursive;
+}
+
+.manage-post h1::first-letter {
+    font-size: 1.3em;
+}
+
+.manage-post form {
+    padding: 10px;
+}
+
+.manage-post label {
+    display: block;
+    font-size: 1.3em;
+}
+
+.manage-post .form-group {
+    margin: 10px 0;
+}
+
+.manage-post input, .manage-post textarea {
+    width: 100%;
+    margin: 10px 0 10px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.manage-post input {
+    height: 40px;
+}
+
+.manage-post textarea {
+    min-height: 200px;
+}
+
+.manage-post .actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.manage-post button {
+    border: none;
+    border: 2px solid #222;
+    border-radius: 3px;
+    padding: 8px 20px;
+    margin: 8px;
+}
+
+.manage-post button:hover {
+    transform: scale(1.1)
+}
+
+.manage-post button:first-of-type {
+    background-color: white;
+}
+
+.manage-post button:last-of-type {
+    background-color: black;
+    color: white
 }
 
 /* Loader */
