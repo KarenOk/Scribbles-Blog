@@ -46,7 +46,7 @@ function App() {
 		setLoadingPosts(true);
 		fetch("http://localhost:5000/posts", {
 			method: "POST",
-			body: JSON.stringify({}),
+			body: JSON.stringify(body),
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
