@@ -33,6 +33,9 @@ def create_app():
 
     @app.route("/")
     def index():
+        """ 
+            Endpoint to test that API works 
+        """
         return "Welcome to Scribbles API! We're lucky to have you."
 
     """ 
@@ -43,6 +46,9 @@ def create_app():
 
     @app.route("/posts")
     def get_posts():
+        """ 
+            Endpoint to get a paginated list of posts
+        """
         posts = Post.query.all()
         paginated_posts = paginator(
             request=request, data=posts, items_per_page=5)
@@ -55,6 +61,9 @@ def create_app():
 
     @app.route("/posts", methods=["POST"])
     def create_post():
+        """ 
+            Endpoint to create a new post
+        """
         data = request.get_json()
         title = data.get("title", None)
         content = data.get("content", None)
@@ -77,6 +86,9 @@ def create_app():
 
     @app.route("/posts/<int:post_id>", methods=["PATCH"])
     def update_post(post_id):
+        """ 
+            Endpoint to update a post
+        """
         post = Post.query.get(post_id)
 
         if not post:
@@ -109,6 +121,9 @@ def create_app():
 
     @app.route("/posts/<int:post_id>", methods=["DELETE"])
     def delete_post(post_id):
+        """ 
+            Endpoint to delete a post
+        """
         post = Post.query.get(post_id)
 
         if not post:
@@ -133,6 +148,9 @@ def create_app():
 
     @app.route("/posts/<int:post_id>/comments")
     def get_comments_for_a_post(post_id):
+        """ 
+            Endpoint to get the comments under a post
+        """
         post = Post.query.get(post_id)
         if not post:
             abort(404)
@@ -148,6 +166,9 @@ def create_app():
 
     @app.route("/posts/<int:post_id>/comments", methods=["POST"])
     def create_comment(post_id):
+        """ 
+            Endpoint to create a comment under a post
+        """
         post = Post.query.get(post_id)
         if not post:
             abort(404)
@@ -172,6 +193,9 @@ def create_app():
 
     @app.route("/comments/<int:comment_id>", methods=["DELETE"])
     def delete_comment(comment_id):
+        """ 
+            Endpoint to delete a comment
+        """
         comment = Comment.query.get(comment_id)
 
         if not comment:
@@ -188,7 +212,11 @@ def create_app():
             "deleted": comment_id
         })
 
-    # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
+    """ 
+            
+        Handle expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error
+    
+    """
 
     @app.errorhandler(400)
     def bad_request(error):
