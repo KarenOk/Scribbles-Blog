@@ -37,7 +37,10 @@ const Posts = ({ posts, getPosts, loading }) => {
 			{posts ? (
 				<>
 					{loading ? (
-						<div className="loader d-flex align-items-center justify-content-center">
+						<div
+							style={{ marginBottom: "30px" }}
+							className="loader d-flex align-items-center justify-content-center"
+						>
 							<div className="lds-dual-ring">
 								<img src={logo} alt="Loading..." />
 							</div>
