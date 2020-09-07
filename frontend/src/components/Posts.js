@@ -6,6 +6,7 @@ import logo from "../logo.png";
 
 const Posts = ({ posts, getPosts, loading }) => {
 	const POSTS_PER_PAGE = 5;
+	const [pageNo, setPageNo] = useState(0);
 	const [pageCount, setPageCount] = useState(0);
 
 	useEffect(() => {
@@ -21,7 +22,7 @@ const Posts = ({ posts, getPosts, loading }) => {
 		getPosts(selectedPage + 1);
 	};
 
-	if (loading) {
+	if (!posts && loading) {
 		return (
 			<div className="loader d-flex align-items-center justify-content-center">
 				<div className="lds-dual-ring">
@@ -35,9 +36,17 @@ const Posts = ({ posts, getPosts, loading }) => {
 		<div className="posts">
 			{posts ? (
 				<>
-					{posts.posts.map((post, index) => (
-						<PostItem key={index} post={post} />
-					))}
+					{loading ? (
+						<div className="loader d-flex align-items-center justify-content-center">
+							<div className="lds-dual-ring">
+								<img src={logo} alt="Loading..." />
+							</div>
+						</div>
+					) : (
+						posts.posts.map((post, index) => (
+							<PostItem key={index} post={post} />
+						))
+					)}
 					<div className="pagination-cont">
 						<ReactPaginate
 							previousLabel={"<<"}
