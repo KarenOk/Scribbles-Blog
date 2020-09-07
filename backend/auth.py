@@ -54,6 +54,11 @@ def verify_and_decode_token(token):
     jwks = json.loads(jwks_json_url.read())
     unverified_header = jwt.get_unverified_header(token)
 
+    if "kid" not in unverified_header:
+        raise AuthError({
+            "code": "invalid_header",
+            "message": "Unable to find appropriate key."}, 400)
+
     for key in jwks["keys"]:
         if key["kid"] == unverified_header["kid"]:
             RSA_KEY = {
