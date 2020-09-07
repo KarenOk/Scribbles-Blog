@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from models import setup_db, db, Post, Comment
+from auth import requires_auth, AuthError
 
 
 def paginator(request, data, items_per_page):
@@ -257,6 +258,14 @@ def create_app():
             "error": 500,
             "message": "An error occurred on our end."
         }), 500
+
+    @app.errorhandler(AuthError)
+    def auth_error(error):
+        print(error)
+        return jsonify({
+            "success": False,
+            "error": error.status_code,
+            "error": error.error["message"]}), 401
 
     return app
 
