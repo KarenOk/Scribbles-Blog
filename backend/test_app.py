@@ -148,7 +148,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertIsNone(post)
 
     def test_delete_post_not_found(self):
-        res = self.client().delete(f"/posts/1000", json=self.new_post)
+        res = self.client().delete(f"/posts/1000")
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -157,7 +157,7 @@ class ScribblesTestCase(unittest.TestCase):
 
     def test_get_paginated_comments_for_a_post(self):
         post_id = self.__create_post__()
-        comment_id = self.__create_comment__(post_id=post_id)
+        self.__create_comment__(post_id=post_id)
 
         res = self.client().get(f"/posts/{post_id}/comments")
         data = json.loads(res.data)
@@ -190,7 +190,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertTrue(data["success"])
 
         post = Post.query.get(post_id).format()
-        self.assertEqual(len(post["comments"]), 1)  # check number of comment
+        self.assertEqual(len(post["comments"]), 1)  # check number of comments
 
     def test_create_comment_for_a_post_bad_request(self):
         post_id = self.__create_post__()
