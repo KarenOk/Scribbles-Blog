@@ -4,36 +4,29 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-from models import setup_db, Post, Comment
+from models import setup_db, Post, Comment, db_drop_and_create_all
 
 
 class ScribblesTestCase(unittest.TestCase):
     """This class represents test cases for Scribbles blog resources. """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         """Initialize app and test variables."""
 
-        self.app = create_app()
-        self.client = self.app.test_client
-        self.database_path = os.environ["DATABASE_URL"]
-        self.JWT = os.environ["JWT"]
-        setup_db(app=self.app, database_path=self.database_path)
+        cls.app = create_app()
+        cls.client = cls.app.test_client
+        cls.database_path = os.environ["DATABASE_URL"]
+        cls.JWT = os.environ["JWT"]
 
-        # binds the app to the current context
-        with self.app.app_context():
-            self.db = SQLAlchemy()
-            self.db.init_app(self.app)
-            self.db.create_all()  # create all tables
+        setup_db(app=cls.app, database_path=cls.database_path)
+        db_drop_and_create_all()
 
-        self.new_post = {
+        cls.new_post = {
             "title": "Post title",
             "content": "Post body",
         }
-
-        self.new_comment = {"comment": "Nice read!", "full_name": "Bruce Lee"}
-
-    def tearDown(self):
-        pass
+        cls.new_comment = {"comment": "Nice read!", "full_name": "Bruce Lee"}
 
     def __create_post__(self):
         """ Helper method to create a new post """

@@ -13,6 +13,15 @@ def setup_db(app, database_path=database_path):
     db.init_app(app=app)
 
 
+def db_drop_and_create_all():
+    '''
+        Drops the database tables and starts afresh/
+        Can be used to initialize a clean database
+    '''
+    db.drop_all()
+    db.create_all()
+
+
 class Post(db.Model):
     __tablename__ = "posts"
 
