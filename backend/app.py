@@ -61,7 +61,8 @@ def create_app():
         })
 
     @app.route("/posts", methods=["POST"])
-    def create_post():
+    @requires_auth("create:post")
+    def create_post(payload):
         """ 
             Endpoint to create a new post
         """
@@ -86,7 +87,8 @@ def create_app():
         })
 
     @app.route("/posts/<int:post_id>", methods=["PATCH"])
-    def update_post(post_id):
+    @requires_auth("update:post")
+    def update_post(payload, post_id):
         """ 
             Endpoint to update a post
         """
@@ -121,7 +123,8 @@ def create_app():
         })
 
     @app.route("/posts/<int:post_id>", methods=["DELETE"])
-    def delete_post(post_id):
+    @requires_auth("delete:post")
+    def delete_post(payload, post_id):
         """ 
             Endpoint to delete a post
         """
@@ -166,7 +169,8 @@ def create_app():
         })
 
     @app.route("/posts/<int:post_id>/comments", methods=["POST"])
-    def create_comment(post_id):
+    @requires_auth("create:comment")
+    def create_comment(payload, post_id):
         """ 
             Endpoint to create a comment under a post
         """
@@ -193,7 +197,8 @@ def create_app():
         })
 
     @app.route("/comments/<int:comment_id>", methods=["DELETE"])
-    def delete_comment(comment_id):
+    @requires_auth("delete:comment")
+    def delete_comment(payload, comment_id):
         """ 
             Endpoint to delete a comment
         """
