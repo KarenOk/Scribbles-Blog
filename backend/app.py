@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
+from sqlalchemy import desc
 from models import setup_db, db, Post, Comment
 from auth import requires_auth, AuthError
 
@@ -50,7 +51,7 @@ def create_app():
         """ 
             Endpoint to get a paginated list of posts
         """
-        posts = Post.query.all()
+        posts = Post.query.order_by(desc(Post.date_created)).all()
         paginated_posts = paginator(
             request=request, data=posts, items_per_page=5)
 
