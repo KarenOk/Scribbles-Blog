@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 import "rodal/lib/rodal.css";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
 	<React.StrictMode>

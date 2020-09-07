@@ -43,11 +43,10 @@ function App() {
 	};
 
 	const createPost = (body) => {
-		console.log("jkjfkfk");
 		setLoadingPosts(true);
 		fetch("http://localhost:5000/posts", {
 			method: "POST",
-			body: JSON.stringify(body),
+			body: JSON.stringify({}),
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -57,10 +56,31 @@ function App() {
 			.then((res) => {
 				getPosts();
 				setLoadingPosts(false);
+				toast.dark("💃 Yay! Your post has been uploaded.", {
+					position: "top-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			})
 			.catch((err) => {
 				console.log(err);
 				setLoadingPosts(false);
+				toast.error(
+					"😞 Bummer. Something went wrong while creating your post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 			});
 	};
 
@@ -89,9 +109,18 @@ function App() {
 				close={() => setShowManagePost(false)}
 				createPost={createPost}
 			/>
-			<button onClick={notify}>Notify !</button>
 
-			<ToastContainer />
+			<ToastContainer
+				position="top-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
 		</div>
 	);
 }
