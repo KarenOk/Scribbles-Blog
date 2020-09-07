@@ -107,7 +107,6 @@ def create_app():
             abort(404)
 
         try:
-            post_id = post.id
             post.delete()
         except:
             db.session.rollback()
@@ -161,6 +160,24 @@ def create_app():
             "success": True,
             "created": comment.id,
             "comment": comment.format()
+        })
+
+    @app.route("/comments/<int:comment_id>", methods=["DELETE"])
+    def delete_comment(comment_id):
+        comment = Comment.query.get(comment_id)
+
+        if not comment:
+            abort(404)
+
+        try:
+            comment.delete()
+        except:
+            db.session.rollback()
+            abort(500)
+
+        return jsonify({
+            "success": True,
+            "deleted": comment_id
         })
 
     # Expected errors - 400, 401, 403, 404, 405, 422, 500, Auth Error

@@ -201,6 +201,27 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["error"], 400)
         self.assertFalse(data["success"])
 
+    def test_delete_comment_success(self):
+        post_id = self.__create_post__()
+        comment_id = self.__create_comment__(post_id=post_id)
+
+        res = self.client().delete(f"/comments/{comment_id}")
+        data = json.loads(res.data)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data["deleted"], comment_id)
+        self.assertTrue(data["success"])
+
+        post = Post.query.get(post_id).format()
+        self.assertEqual(len(post["comments"]), 0)  # check number of comments
+
+    def test_delete_comment_not_found(self):
+        res = self.client().delete(f"/comments/1000")
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertFalse(data["success"])
+
 
 if __name__ == "__main__":
     unittest.main()
