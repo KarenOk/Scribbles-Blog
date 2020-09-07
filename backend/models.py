@@ -24,7 +24,7 @@ class Post(db.Model):
     last_modified = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     comments = db.relationship(
-        "Comment",  backref="post", cascade="all, delete-orphan")
+        "Comment",  backref="post", lazy=False, cascade="all, delete-orphan")
 
     def __init__(self, title, content, date_created=datetime.utcnow(), last_modified=datetime.utcnow()):
         self.title = title
@@ -50,7 +50,7 @@ class Post(db.Model):
             "content": self.content,
             "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "last_modified": self.last_modified.strftime("%d/%m/%Y %H:%M:%S"),
-            "comments": self.comments
+            "comments": [comment.format() for comment in self.comments]
         }
 
 
