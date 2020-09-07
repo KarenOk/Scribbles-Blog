@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 from models import setup_db, db, Post, Comment
@@ -82,6 +83,7 @@ def create_app():
                 post.title = title
             if bool(content):
                 post.content = content
+            post.last_modified = datetime.utcnow()
             post.update()
 
         except Exception:
