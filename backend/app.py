@@ -20,6 +20,17 @@ def create_app():
     setup_db(app)
     CORS(app)
 
+    @app.after_request
+    def after_request(response):
+        """ Set Access Control Headers """
+
+        response.headers.add("Access-Control-Allow-Headers",
+                             "Content-Type, Authorization")
+        response.headers.add("Access-Control-Allow-Methods",
+                             "GET, POST, PATCH, OPTIONS, DELETE")
+
+        return response
+
     @app.route("/")
     def index():
         return "Welcome to Scribbles API! We're lucky to have you."
