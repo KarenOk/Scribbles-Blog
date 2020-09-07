@@ -59,6 +59,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(140), nullable=False)
+    full_name = db.Column(db.String(50), default="Anonymous", nullable=False)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=True)
