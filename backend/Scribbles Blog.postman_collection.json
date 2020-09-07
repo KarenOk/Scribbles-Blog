@@ -1,0 +1,923 @@
+{
+	"info": {
+		"_postman_id": "72ddc103-9740-47a5-a7e1-fc6244aa2a50",
+		"name": "Scribbles Blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "Welcome",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "729a31d3-2890-4138-8bc0-b2290d20bdac",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a25543d-f087-4e9a-a717-7dde9624c3fd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1eeb37d1-04d8-4bef-a643-79543063a13d",
+								"exec": [
+									"pm.test(\"Status code is 401\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Post title\",\n    \"content\": \"Post body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7bda3b4b-00f7-4f69-939c-a755e4c6b27d",
+								"exec": [
+									"pm.test(\"Status code is 401\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated title\",\n    \"content\": \"Updated body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comments under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1eeb37d1-04d8-4bef-a643-79543063a13d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish comment under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1eeb37d1-04d8-4bef-a643-79543063a13d",
+								"exec": [
+									"pm.test(\"Status code is 401\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"This is a comment\",\n    \"full_name\": \"Bruce Lee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b25340b-f19d-4acb-af1c-cc6b0f662b95",
+								"exec": [
+									"pm.test(\"Status code is 401\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/comments/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3701aba6-b4d4-42ff-9186-2bf5055d6ec0",
+								"exec": [
+									"pm.test(\"Status code is 401\", function() {",
+									"    pm.response.to.have.status(401)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "reader",
+			"item": [
+				{
+					"name": "Get posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36d7d419-88d2-48d3-8837-5d829de8cc6d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc01bb94-81ae-4d29-b810-84139b76877d",
+								"exec": [
+									"pm.test(\"Status code is 403\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Post title\",\n    \"content\": \"Post body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "417bc2c2-662b-44c7-b159-6bcb79c2d101",
+								"exec": [
+									"pm.test(\"Status code is 403\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated title\",\n    \"content\": \"Updated body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comments under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46d9032f-1bfd-420b-bdb2-0f5a6b229959",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish comment under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c0c42fc-e20a-4d11-bf9a-f0af7c89e895",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"This is a comment\",\n    \"full_name\": \"Bruce Lee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7e4c71c-286f-4dc6-a9a8-f90235005099",
+								"exec": [
+									"pm.test(\"Status code is 403\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/comments/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ec44f57c-2ffb-4ce4-8b7a-d158e433cc88",
+								"exec": [
+									"pm.test(\"Status code is 403\", function() {",
+									"    pm.response.to.have.status(403)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDUyZGU5ZWY1ZjAwNjdiNjg4M2EiLCJhdWQiOiJzY3JpYmJsZXMtYmxvZyIsImlhdCI6MTU5OTQ4NDQ5NiwiZXhwIjoxNTk5NTcwODk2LCJhenAiOiJWMGVFbnZVcFU3RGpIM1Z5NDFpNWRmbE5HSXU4UEhQUyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiXX0.P7MBGkml3Io1vsPW_mVLqpbR5WOkUAfqbV6FBiK4Ruqan5MBWfiJ4J-s1aeH6iZOu6gpL0vayhqFpkhc_HGjXne7gqfGdsFOosC266nEWXOwEC7GkgcYZEFLxNOHjDa1aNem4cX87nOu3hy30TgZWJgZdVesQ8cQX6DyvW_QEUiHOvJx8wP9sORgMDLFD1fAo2lEYYV7Yjc6i8Iif9Ax9q1nF6_cIJUCK38DJCRrakdf-CIKuWom3AUNckkKhWi5ADaLzlsnxtfMMWyfLQJH3RfFBq0XaBG4B6POd2hQ1ftz66mzcDTp6WsBidqXBnmkX51_hCFb8c4O7USxp1ubpw",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "73824e91-7fd3-4384-b9d0-db3ba3b99acf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4acc1c5-2901-4693-a5bb-1d20d710ef7a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "author",
+			"item": [
+				{
+					"name": "Get posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b2473780-dc1d-4e81-8470-a06b280637d4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts?page=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "32f64ff4-4781-41ba-9f04-a2a1191291ae",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Post title\",\n    \"content\": \"Post body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fa3aa8d-ef1f-4353-be48-25faa1b6dceb",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated title\",\n    \"content\": \"Updated body\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comments under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "38fb60c2-f5a2-4454-bd53-ec46d7dfc9bd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish comment under a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7b45582-f131-47ed-8b85-8a2277378840",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comment\": \"This is a comment\",\n    \"full_name\": \"Bruce Lee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/posts/1/comments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a861a74d-1cd9-4ce4-89ff-8fe98ee9a687",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/comments/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "513d9d24-b91b-4745-ace5-609254602130",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDRlZGU5ZWY1ZjAwNjdiNjg4MzUiLCJhdWQiOiJzY3JpYmJsZXMtYmxvZyIsImlhdCI6MTU5OTQ4NDQwMCwiZXhwIjoxNTk5NTcwODAwLCJhenAiOiJWMGVFbnZVcFU3RGpIM1Z5NDFpNWRmbE5HSXU4UEhQUyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiLCJjcmVhdGU6cG9zdCIsImRlbGV0ZTpjb21tZW50IiwiZGVsZXRlOnBvc3QiLCJ1cGRhdGU6cG9zdCJdfQ.NegFDZXNXezjC1ouTCWOabenEU_x5tsvYi6zcnruI4rzrdD7NqhmyNRQTs396AwzYidCYIyq5DJPSDRA2xjdjwtRhzHRCL-jkaUE7axLNmmGvh3pacy3nyV1D8HYWgtoX6onnIDXaDUWg6myX0iu8jHbsDdT3qayeqOy6A1BSDVDWZLrBAyTqFsI7oT7eLdACYkZ5qopk8u9Hepl35IbCk7tu4a_T8p5AJUmss-Nr98J8D_Q3Lf6p96c9noIIgvObkXU4BMcPScw9zzPsSFdbpjul8ceekAyh_ef-DL0Xeq_X2WKOvB_OPqg1GK_QoXzLaEjngOTLne5UGg0NWeG2Q",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4e72206a-1853-48d4-8958-6b2a5b15b201",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "63115710-7eea-44fa-9a9e-9eae03ba139d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6d52ba45-1541-4acc-8bac-454a5e487d65",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a5776d3b-ab66-4f9c-8034-3cea4c82548b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0bdb912d-accc-4ec1-bd62-cc8c3f5e4517",
+			"key": "host",
+			"value": "localhost:5000"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
