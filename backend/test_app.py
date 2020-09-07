@@ -16,6 +16,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.database_path = os.environ["DATABASE_URL"]
+        self.JWT = os.environ["JWT"]
         setup_db(app=self.app, database_path=self.database_path)
 
         # binds the app to the current context
@@ -29,14 +30,15 @@ class ScribblesTestCase(unittest.TestCase):
             "content": "Post body",
         }
 
-        self.new_comment = {"comment": "Nice read!"}
+        self.new_comment = {"comment": "Nice read!", "full_name": "Bruce Lee"}
 
     def tearDown(self):
         pass
 
     def __create_post__(self):
         """ Helper method to create a new post """
-        res = self.client().post("/posts", json=self.new_post)
+        res = self.client().post(
+            "/posts", headers={"Authorization": f"Bearer {self.JWT}"}, json=self.new_post)
         data = json.loads(res.data)
         post_id = data["created"]
         return post_id
@@ -44,7 +46,7 @@ class ScribblesTestCase(unittest.TestCase):
     def __create_comment__(self, post_id):
         """ Helper method to create a new comment under a post """
         res = self.client().post(
-            f"/posts/{post_id}/comments", json=self.new_comment)
+            f"/posts/{post_id}/comments", headers={"Authorization": f"Bearer {self.JWT}"}, json=self.new_comment)
         data = json.loads(res.data)
         comment_id = data["created"]
         return comment_id
@@ -67,7 +69,8 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["success"], False)
 
     def test_create_post_success(self):
-        res = self.client().post("/posts", json=self.new_post)
+        res = self.client().post(
+            "/posts", headers={"Authorization": f"Bearer {self.JWT}"}, json=self.new_post)
         data = json.loads(res.data)
         post = Post.query.get(data["created"])
 
@@ -77,7 +80,8 @@ class ScribblesTestCase(unittest.TestCase):
 
     def test_create_post_bad_request(self):
         # missing keys
-        res = self.client().post("/posts", json={})
+        res = self.client().post(
+            "/posts", headers={"Authorization": f"Bearer {self.JWT}"}, json={})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 400)
@@ -85,7 +89,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertFalse(data["success"])
 
         # title exceeds char limit
-        res = self.client().post("/posts", json={
+        res = self.client().post("/posts", headers={"Authorization": f"Bearer {self.JWT}"}, json={
             "title": "Some extremely long title that clearly exceeds the specified char limit. Some extremely long title that clearly exceeds the specified char limit.",
             "content": "Some content"
         })
@@ -100,7 +104,7 @@ class ScribblesTestCase(unittest.TestCase):
 
         # Update only title
         res = self.client().patch(
-            f"/posts/{post_id}", json={"title": "Updated title"})
+            f"/posts/{post_id}", headers={"Authorization": f"Bearer {self.JWT}"}, json={"title": "Updated title"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["updated"], post_id)
@@ -108,7 +112,7 @@ class ScribblesTestCase(unittest.TestCase):
 
         # Update only content
         res = self.client().patch(
-            f"/posts/{post_id}", json={"content": "Updated content"})
+            f"/posts/{post_id}", headers={"Authorization": f"Bearer {self.JWT}"}, json={"content": "Updated content"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["updated"], post_id)
@@ -121,14 +125,16 @@ class ScribblesTestCase(unittest.TestCase):
 
     def test_update_post_bad_request(self):
         post_id = self.__create_post__()
-        res = self.client().patch(f"/posts/{post_id}", json={})
+        res = self.client().patch(
+            f"/posts/{post_id}", headers={"Authorization": f"Bearer {self.JWT}"}, json={})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data["error"], 400)
         self.assertFalse(data["success"])
 
     def test_update_post_not_found(self):
-        res = self.client().patch(f"/posts/1000", json=self.new_post)
+        res = self.client().patch(f"/posts/1000",
+                                  headers={"Authorization": f"Bearer {self.JWT}"}, json=self.new_post)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -138,7 +144,8 @@ class ScribblesTestCase(unittest.TestCase):
     def test_delete_post_success(self):
         post_id = self.__create_post__()
 
-        res = self.client().delete(f"/posts/{post_id}")
+        res = self.client().delete(
+            f"/posts/{post_id}", headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["deleted"], post_id)
@@ -148,7 +155,8 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertIsNone(post)
 
     def test_delete_post_not_found(self):
-        res = self.client().delete(f"/posts/1000")
+        res = self.client().delete(
+            f"/posts/1000", headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -159,21 +167,24 @@ class ScribblesTestCase(unittest.TestCase):
         post_id = self.__create_post__()
         self.__create_comment__(post_id=post_id)
 
-        res = self.client().get(f"/posts/{post_id}/comments")
+        res = self.client().get(
+            f"/posts/{post_id}/comments", headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(data["comments"]), 1)
         self.assertTrue(data["success"])
 
     def test_get_paginated_comments_for_a_post_invalid_page(self):
-        res = self.client().get("/posts/1/comments?page=1000")
+        res = self.client().get("/posts/1/comments?page=1000",
+                                headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data["error"], 404)
         self.assertEqual(data["success"], False)
 
     def test_get_paginated_comments_for_a_post_not_found(self):
-        res = self.client().get("/posts/1000/comments")
+        res = self.client().get("/posts/1000/comments",
+                                headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data["error"], 404)
@@ -183,7 +194,7 @@ class ScribblesTestCase(unittest.TestCase):
         post_id = self.__create_post__()
 
         res = self.client().post(
-            f"/posts/{post_id}/comments", json=self.new_comment)
+            f"/posts/{post_id}/comments", headers={"Authorization": f"Bearer {self.JWT}"}, json=self.new_comment)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["comment"]["post_id"], post_id)
@@ -195,7 +206,8 @@ class ScribblesTestCase(unittest.TestCase):
     def test_create_comment_for_a_post_bad_request(self):
         post_id = self.__create_post__()
 
-        res = self.client().post(f"/posts/{post_id}/comments", json={})
+        res = self.client().post(
+            f"/posts/{post_id}/comments", headers={"Authorization": f"Bearer {self.JWT}"}, json={})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data["error"], 400)
@@ -205,7 +217,8 @@ class ScribblesTestCase(unittest.TestCase):
         post_id = self.__create_post__()
         comment_id = self.__create_comment__(post_id=post_id)
 
-        res = self.client().delete(f"/comments/{comment_id}")
+        res = self.client().delete(
+            f"/comments/{comment_id}", headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["deleted"], comment_id)
@@ -215,7 +228,8 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(len(post["comments"]), 0)  # check number of comments
 
     def test_delete_comment_not_found(self):
-        res = self.client().delete(f"/comments/1000")
+        res = self.client().delete(f"/comments/1000",
+                                   headers={"Authorization": f"Bearer {self.JWT}"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
