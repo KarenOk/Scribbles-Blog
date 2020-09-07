@@ -6,10 +6,10 @@ const PostItem = ({ post }) => {
 			<h3> {post.title} </h3>
 			<p className="details">
 				{" "}
-				Written by <span className="highlight"> {post.author} </span> on{" "}
+				Written by <span className="highlight"> Karen Okonkwo </span> on{" "}
 				<span className="highlight">
 					{" "}
-					{post.date_created.toLocaleDateString(undefined, {
+					{new Date(post.date_created).toLocaleDateString(undefined, {
 						weekday: "long",
 						year: "numeric",
 						month: "long",
@@ -19,7 +19,7 @@ const PostItem = ({ post }) => {
 				at{" "}
 				<span className="highlight">
 					{" "}
-					{post.date_created.toLocaleTimeString([], {
+					{new Date(post.date_created).toLocaleTimeString([], {
 						hour: "2-digit",
 						minute: "2-digit",
 					})}{" "}

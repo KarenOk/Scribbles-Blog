@@ -1,47 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PostItem from "./PostItem";
+import noPosts from "../images/no-posts.svg";
+import ReactPaginate from "react-paginate";
+import logo from "../logo.png";
 
-const post = {
-	title: "The 5 Step Rule to financial freedom",
-	content:
-		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna id volutpat lacus laoreet. Elementum eu facilisis sed odio morbi quis commodo odio aenean. Sed viverra ipsum nunc aliquet. Vulputate mi sit amet mauris commodo quis imperdiet massa. Sit amet mauris commodo quis imperdiet massa tincidunt nunc. Quis viverra nibh cras pulvinar mattis nunc sed. Suspendisse interdum consectetur libero id faucibus nisl. Metus vulputate eu scelerisque felis imperdiet. In cursus turpis massa tincidunt dui ut ornare lectus.",
-	date_created: new Date(),
-	author: "Karen Okonkwo",
-	comments: [
-		{
-			comment:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-			user: "ioweu1234",
-		},
-		{
-			comment:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-			user: "ioweu1234",
-		},
-		{
-			comment:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-			user: "ioweu1234",
-		},
-		{
-			comment:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-			user: "ioweu1234",
-		},
-		{
-			comment:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-			user: "ioweu1234",
-		},
-	],
-};
+const Posts = ({ posts, getPosts, loading }) => {
+	const POSTS_PER_PAGE = 5;
+	const [pageNo, setPageNo] = useState(0);
+	const [pageCount, setPageCount] = useState(0);
 
-const Posts = () => {
+	useEffect(() => {
+		getPosts();
+	}, []);
+
+	useEffect(() => {
+		if (posts) setPageCount(Math.ceil(posts.total_posts / POSTS_PER_PAGE));
+	}, [posts]);
+
+	useEffect(() => {
+		getPosts(pageNo + 1);
+	}, [pageNo]);
+
+	const handlePageClick = (e) => {
+		const selectedPage = e.selected;
+		setPageNo(selectedPage);
+	};
+
+	if (loading) {
+		return (
+			<div className="loader d-flex align-items-center justify-content-center">
+				<div className="lds-dual-ring">
+					<img src={logo} alt="Loading..." />
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="posts">
-			{new Array(10).fill(0).map((item, index) => (
-				<PostItem key={index} post={post} />
-			))}
+			{posts ? (
+				<>
+					{posts.posts.map((post, index) => (
+						<PostItem key={index} post={post} />
+					))}
+					<div className="pagination-cont">
+						<ReactPaginate
+							previousLabel={"<<"}
+							nextLabel={">>"}
+							breakLabel={"..."}
+							breakClassName={"break-me"}
+							pageCount={pageCount}
+							marginPagesDisplayed={2}
+							pageRangeDisplayed={5}
+							onPageChange={handlePageClick}
+							containerClassName={"pagination"}
+							subContainerClassName={"pages pagination"}
+							activeClassName={"active"}
+						/>
+					</div>
+				</>
+			) : (
+				<div className="no-posts">
+					<img src={noPosts} alt="" />
+					<p> No posts found. </p>
+				</div>
+			)}
 		</div>
 	);
 };
