@@ -78,7 +78,7 @@ def verify_and_decode_token(token):
 
         except jwt.ExpiredSignatureError:
             raise AuthError({"code": "token_expired",
-                             "description": "Token is expired."}, 401)
+                             "message": "Token is expired."}, 401)
 
         except jwt.JWTClaimsError:
             raise AuthError({
@@ -100,7 +100,6 @@ def check_for_permission(permission, payload):
     """
         Checks for permission within payload
     """
-    print(payload)
     if "permissions" not in payload:
         raise AuthError({
             "code": "invalid_claims",
