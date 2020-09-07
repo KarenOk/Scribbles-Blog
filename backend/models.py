@@ -64,9 +64,10 @@ class Comment(db.Model):
         db.DateTime, default=datetime.utcnow, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=True)
 
-    def __init__(self, comment, post_id):
+    def __init__(self, comment, full_name, post_id):
         self.comment = comment
         self.post_id = post_id
+        self.full_name = full_name
 
     def insert(self):
         db.session.add(self)
@@ -83,6 +84,7 @@ class Comment(db.Model):
         return {
             "id": self.id,
             "comment": self.comment,
+            "full_name": self.full_name,
             "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "post_id": self.post_id,
         }

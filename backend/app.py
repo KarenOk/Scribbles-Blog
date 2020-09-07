@@ -180,11 +180,14 @@ def create_app():
 
         data = request.get_json()
         comment_text = data.get("comment", None)
-        if not comment_text:
+        full_name = data.get("full_name", None)
+
+        if not comment_text or not full_name:
             abort(400)
 
         try:
-            comment = Comment(comment=comment_text, post_id=post_id)
+            comment = Comment(comment=comment_text,
+                              full_name=full_name, post_id=post_id)
             comment.insert()
         except:
             db.session.rollback()
