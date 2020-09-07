@@ -34,6 +34,21 @@ class ScribblesTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def __create_post__(self):
+        """ Helper method to create a new post """
+        res = self.client().post("/posts", json=self.new_post)
+        data = json.loads(res.data)
+        post_id = data["created"]
+        return post_id
+
+    def __create_comment__(self, post_id):
+        """ Helper method to create a new comment under a post """
+        res = self.client().post(
+            f"/posts/{post_id}/comments", json=self.new_comment)
+        data = json.loads(res.data)
+        comment_id = data["created"]
+        return comment_id
+
     def test_index_route(self):
         res = self.client().get("/")
         self.assertEqual(res.status_code, 200)
@@ -81,10 +96,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertFalse(data["success"], 400)
 
     def test_update_post_success(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
+        post_id = self.__create_post__()
 
         # Update only title
         res = self.client().patch(
@@ -108,11 +120,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(post.content, "Updated content")
 
     def test_update_post_bad_request(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
-
+        post_id = self.__create_post__()
         res = self.client().patch(f"/posts/{post_id}", json={})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
@@ -128,10 +136,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertFalse(data["success"])
 
     def test_delete_post_success(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
+        post_id = self.__create_post__()
 
         res = self.client().delete(f"/posts/{post_id}")
         data = json.loads(res.data)
@@ -151,16 +156,8 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertFalse(data["success"])
 
     def test_get_paginated_comments_for_a_post(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
-
-        # Create comment under a post
-        res = self.client().post(
-            f"/posts/{post_id}/comments", json=self.new_comment)
-        data = json.loads(res.data)
-        comment_id = data["created"]
+        post_id = self.__create_post__()
+        comment_id = self.__create_comment__(post_id=post_id)
 
         res = self.client().get(f"/posts/{post_id}/comments")
         data = json.loads(res.data)
@@ -183,10 +180,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(data["success"], False)
 
     def test_create_comment_for_a_post(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
+        post_id = self.__create_post__()
 
         res = self.client().post(
             f"/posts/{post_id}/comments", json=self.new_comment)
@@ -199,10 +193,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertEqual(len(post["comments"]), 1)  # check number of comment
 
     def test_create_comment_for_a_post_bad_request(self):
-        # Create new post
-        res = self.client().post("/posts", json=self.new_post)
-        data = json.loads(res.data)
-        post_id = data["created"]
+        post_id = self.__create_post__()
 
         res = self.client().post(f"/posts/{post_id}/comments", json={})
         data = json.loads(res.data)
