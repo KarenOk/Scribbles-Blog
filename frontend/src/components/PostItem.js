@@ -38,9 +38,7 @@ const PostItem = ({ post }) => {
 
 			<p className="intro"> {post.content} </p>
 
-			<a href="#!" className="read-more">
-				Read more
-			</a>
+			<p className="read-more">Read more</p>
 		</article>
 	);
 };

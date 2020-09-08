@@ -230,10 +230,6 @@ nav .social img {
     font-weight: bolder;
 }
 
-.post-item .read-more:hover {
-    color: rgb(1, 1, 126);
-}
-
 /* 
  *
  *
@@ -469,7 +465,7 @@ nav .social img {
 .post-page .load button {
     width: 200px;
     padding: 10px 15px;
-    background-color: rgb(1, 1, 126);
+    background-color: rgb(1, 1, 97);
     color: white;
     border-radius: 4px;
     font-family: inherit;
