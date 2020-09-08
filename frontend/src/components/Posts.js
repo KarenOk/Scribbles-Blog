@@ -6,7 +6,6 @@ import logo from "../logo.png";
 
 const Posts = ({ posts, getPosts, loading }) => {
 	const POSTS_PER_PAGE = 5;
-	const [pageNo, setPageNo] = useState(0);
 	const [pageCount, setPageCount] = useState(0);
 
 	useEffect(() => {
