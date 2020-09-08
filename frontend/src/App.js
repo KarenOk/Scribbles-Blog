@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BASE_URL } from "./BASE_URL";
 import Header from "./components/Header";
@@ -8,6 +9,7 @@ import Posts from "./components/Posts";
 import Footer from "./components/Footer";
 import Banner from "./components/Banner";
 import ManagePost from "./components/ManagePost";
+import Post from "./components/PostPage";
 import logo from "./logo.png";
 
 function App() {
@@ -150,29 +152,47 @@ function App() {
 
 	return (
 		<div className="app d-flex flex-column">
-			{isAuthenticated && <Banner />}
-			<div className="container">
-				<Header showCreatePost={() => setShowManagePost(true)} />
-				<Posts posts={posts} getPosts={getPosts} loading={loadingPosts} />
-			</div>
-			<Footer />
-			<ManagePost
-				visible={showManagePost}
-				close={() => setShowManagePost(false)}
-				createPost={createPost}
-			/>
+			<Router>
+				{isAuthenticated && <Banner />}
+				<div className="container">
+					<Header showCreatePost={() => setShowManagePost(true)} />
+					<Switch>
+						<Route
+							path="/post/:id"
+							exact
+							render={() => <Post post={posts ? posts.posts[0] : null} />}
+						/>
+						<Route
+							path="/"
+							render={() => (
+								<Posts
+									posts={posts}
+									getPosts={getPosts}
+									loading={loadingPosts}
+								/>
+							)}
+						/>
+					</Switch>
+				</div>
+				<Footer />
+				<ManagePost
+					visible={showManagePost}
+					close={() => setShowManagePost(false)}
+					createPost={createPost}
+				/>
 
-			<ToastContainer
-				position="top-center"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
+				<ToastContainer
+					position="top-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			</Router>
 		</div>
 	);
 }

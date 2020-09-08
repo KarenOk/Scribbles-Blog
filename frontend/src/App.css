@@ -1,4 +1,10 @@
-/* General */
+/* 
+ *
+ *
+  General 
+ *
+ *
+ */
 
 .d-flex {
     display: flex;
@@ -10,6 +16,10 @@
 
 .justify-content-center {
     justify-content: center;
+}
+
+.justify-space-between {
+    justify-content: space-between;
 }
 
 .flex-wrap {
@@ -33,7 +43,13 @@ a, a:active, a:hover {
     opacity: 0.3;
 }
 
-/* Main app */
+/* 
+ *
+ *
+  Main app 
+ *
+ *
+ */
 
 .app {
     min-height: 100vh;
@@ -47,7 +63,13 @@ a, a:active, a:hover {
     margin: 0 auto;
 }
 
-/* Banner */
+/* 
+ *
+ *
+  Banner 
+ *
+ *
+ */
 
 .banner {
     text-align: center;
@@ -60,7 +82,13 @@ a, a:active, a:hover {
     background-color: turquoise;
 }
 
-/*  .app-Header Section  */
+/* 
+ *
+ *
+   .app-Header Section  
+ *
+ *
+  */
 
 .app-header {
     text-align: center;
@@ -122,7 +150,13 @@ nav .social img {
     height: 30px;
 }
 
-/* Posts */
+/* 
+ *
+ *
+  Posts 
+ *
+ *
+ */
 
 .posts {
     width: 100%;
@@ -200,7 +234,13 @@ nav .social img {
     color: rgb(1, 1, 126);
 }
 
-/*  Manage posts */
+/* 
+ *
+ *
+   Manage posts 
+ *
+ *
+ */
 
 .manage-post .rodal-dialog {
     max-width: 500px;
@@ -282,7 +322,89 @@ nav .social img {
     color: white
 }
 
-/* Loader */
+/* 
+ *
+ *
+  Post page 
+ *
+ *
+ */
+
+.post-page {
+    font-size: 16px;
+    margin-bottom: 80px;
+}
+
+.post-page.no-post img {
+    width: 60%;
+}
+
+.post-page.no-post p {
+    font-size: 1.2em;
+}
+
+.post-page header {
+    margin-bottom: 40px;
+}
+
+.post-page header>div {
+    margin-bottom: 30px;
+}
+
+.post-page .image-cont {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 10px;
+}
+
+.post-page img {
+    width: 100%;
+    height: 100%;
+}
+
+.post-page .author {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-page header p {
+    margin: 2px 0;
+}
+
+.post-page header button {
+    width: 40px;
+    background: transparent;
+    border: none;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.post-page h2 {
+    font-family: 'Grandstander', cursive;
+    font-size: 3em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.post-page section {
+    margin: 20px 0;
+}
+
+.post-page .content {
+    white-space: pre-line;
+    line-height: 25px;
+}
+
+/* 
+ *
+ *
+  Loader 
+ *
+ *
+ */
 
 .lds-dual-ring {
     display: inline-block;
@@ -320,7 +442,13 @@ nav .social img {
     }
 }
 
-/* Pagination */
+/* 
+ *
+ *
+  Pagination 
+ *
+ *
+ */
 
 .pagination-cont {
     width: 100%;
@@ -363,7 +491,13 @@ nav .social img {
     border-radius: unset
 }
 
-/* Footer */
+/* 
+ *
+ *
+  Footer 
+ *
+ *
+ */
 
 footer {
     background-color: black;

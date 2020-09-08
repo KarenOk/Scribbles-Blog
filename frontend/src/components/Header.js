@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { NavLink } from "react-router-dom";
 import logo from "../logo.png";
 import github from "../images/github.png";
 import twitter from "../images/twitter.png";
@@ -18,9 +19,7 @@ const Header = ({ showCreatePost }) => {
 			<p> DOCUMENT YOUR THOUGHTS AND MUSINGS...</p>
 			<nav>
 				<div className="routes">
-					<a href="#!" className="active">
-						POSTS
-					</a>
+					<NavLink to="/">POSTS</NavLink>
 					{!isAuthenticated && (
 						<a href="#!" onClick={() => loginWithRedirect()}>
 							LOGIN/REGISTER

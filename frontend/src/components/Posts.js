@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PostItem from "./PostItem";
 import noPosts from "../images/no-posts.svg";
 import ReactPaginate from "react-paginate";
@@ -46,7 +47,9 @@ const Posts = ({ posts, getPosts, loading }) => {
 						</div>
 					) : (
 						posts.posts.map((post, index) => (
-							<PostItem key={index} post={post} />
+							<Link to={`/post/${post.id}`}>
+								<PostItem key={index} post={post} />
+							</Link>
 						))
 					)}
 					<div className="pagination-cont">
