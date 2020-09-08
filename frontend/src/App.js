@@ -149,7 +149,7 @@ function App() {
 	}
 
 	return (
-		<div className="app">
+		<div className="app d-flex flex-column">
 			{isAuthenticated && <Banner />}
 			<div className="container">
 				<Header showCreatePost={() => setShowManagePost(true)} />

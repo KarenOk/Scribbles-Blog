@@ -16,6 +16,10 @@
     flex-wrap: wrap;
 }
 
+.flex-column {
+    flex-direction: column;
+}
+
 a, a:active, a:hover {
     text-decoration: none;
     color: inherit;
@@ -36,8 +40,8 @@ a, a:active, a:hover {
 }
 
 .container {
+    flex: 1;
     width: 90%;
-    min-height: 85vh;
     max-width: 800px;
     margin: 20px;
     margin: 0 auto;
@@ -80,7 +84,6 @@ header h1 {
 
 header p {
     font-size: 1.2em;
-    /* font-weight: 40; */
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
@@ -131,7 +134,6 @@ nav .social img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
     margin: 20px;
     font-size: 1.2em;
 }
@@ -139,14 +141,13 @@ nav .social img {
 .posts .no-posts img {
     width: 200px;
     height: 200px;
-    margin: 0 auto;
 }
 
 .post-item {
     width: 100%;
     border: 3px solid black;
     padding: 15px 30px;
-    margin: 30px 0;
+    margin-bottom: 30px;
     cursor: pointer;
     min-height: 260px;
     box-sizing: border-box;
