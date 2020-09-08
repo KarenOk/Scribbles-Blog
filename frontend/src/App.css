@@ -626,4 +626,9 @@ footer a:hover {
         font-size: 1.2em;
         margin: 10px 0 20px;
     }
+    .post-page .comment-box small {
+        display: block;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
 }
