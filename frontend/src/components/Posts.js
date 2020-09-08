@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PostItem from "./PostItem";
-import noPosts from "../images/no-posts.svg";
+import noPosts from "../images/no-posts-color.svg";
 import ReactPaginate from "react-paginate";
 import logo from "../logo.png";
 

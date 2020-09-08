@@ -79,7 +79,7 @@ a, a:active, a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: turquoise;
+    background-color: gold;
 }
 
 /* 
@@ -336,7 +336,7 @@ nav .social img {
 }
 
 .post-page.no-post img {
-    width: 60%;
+    width: 35%;
 }
 
 .post-page.no-post p {
