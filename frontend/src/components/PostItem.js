@@ -33,8 +33,7 @@ const PostItem = ({ post }) => {
 						minute: "2-digit",
 					})}{" "}
 				</span>{" "}
-				with <span className="highlight"> {post.comments.length} </span>{" "}
-				comments
+				with <span className="highlight"> {post.no_of_comments} </span> comments
 			</p>
 
 			<p className="intro"> {post.content} </p>

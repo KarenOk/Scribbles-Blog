@@ -197,7 +197,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertTrue(data["success"])
 
         post = Post.query.get(post_id).format()
-        self.assertEqual(len(post["comments"]), 1)  # check number of comments
+        self.assertEqual(post["no_of_comments"], 1)  # check number of comments
 
     def test_create_comment_for_a_post_bad_request(self):
         post_id = self.__create_post__()
@@ -221,7 +221,7 @@ class ScribblesTestCase(unittest.TestCase):
         self.assertTrue(data["success"])
 
         post = Post.query.get(post_id).format()
-        self.assertEqual(len(post["comments"]), 0)  # check number of comments
+        self.assertEqual(post["no_of_comments"], 0)  # check number of comments
 
     def test_delete_comment_not_found(self):
         res = self.client().delete(f"/comments/1000",

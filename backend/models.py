@@ -63,7 +63,7 @@ class Post(db.Model):
             "image_url": self.image_url,
             "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "last_modified": self.last_modified.strftime("%d/%m/%Y %H:%M:%S"),
-            "comments": [comment.format() for comment in self.comments]
+            "no_of_comments": len(self.comments)
         }
 
 
