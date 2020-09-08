@@ -28,6 +28,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     content = db.Column(db.String, nullable=False)
+    author = db.Column(db.String(50), default="Anonymous", nullable=False)
+    image_url = db.Column(db.String(100))
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow,  nullable=False)
     last_modified = db.Column(
@@ -35,9 +37,11 @@ class Post(db.Model):
     comments = db.relationship(
         "Comment",  backref="post", lazy=False, cascade="all, delete-orphan")
 
-    def __init__(self, title, content):
+    def __init__(self, title, content, author, image_url):
         self.title = title
         self.content = content
+        self.author = author
+        self.image_url = image_url
 
     def insert(self):
         db.session.add(self)
@@ -55,6 +59,8 @@ class Post(db.Model):
             "id": self.id,
             "title": self.title,
             "content": self.content,
+            "author": self.author,
+            "image_url": self.image_url,
             "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "last_modified": self.last_modified.strftime("%d/%m/%Y %H:%M:%S"),
             "comments": [comment.format() for comment in self.comments]
@@ -67,14 +73,18 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(140), nullable=False)
     full_name = db.Column(db.String(50), default="Anonymous", nullable=False)
+    image_url = db.Column(db.String(100))
+    is_author = db.Column(db.Boolean, default=False, nullable=False)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=True)
 
-    def __init__(self, comment, full_name, post_id):
+    def __init__(self, comment, full_name, image_url, post_id, is_author=False):
         self.comment = comment
         self.post_id = post_id
         self.full_name = full_name
+        self.image_url = image_url
+        self.is_author = is_author
 
     def insert(self):
         db.session.add(self)
@@ -92,6 +102,8 @@ class Comment(db.Model):
             "id": self.id,
             "comment": self.comment,
             "full_name": self.full_name,
+            "image_url": self.image_url,
+            "is_author": self.is_author,
             "date_created": self.date_created.strftime("%d/%m/%Y %H:%M:%S"),
             "post_id": self.post_id,
         }
