@@ -33,17 +33,30 @@ function App() {
 		fetch("http://localhost:5000/posts" + (page ? `?page=${page}` : ""))
 			.then((res) => res.json())
 			.then((res) => {
-				setPosts(res);
-				setLoadingPosts(false);
-			})
-			.catch((err) => {
-				console.log(err);
+				if (res.error) {
+					console.log(res.error);
+					toast.error(
+						"😞 Darn. Something went wrong while fetching your posts.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					setPosts(res);
+				}
 				setLoadingPosts(false);
 			});
 	};
 
 	const createPost = (body) => {
 		setLoadingPosts(true);
+
 		fetch("http://localhost:5000/posts", {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -54,24 +67,25 @@ function App() {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				getPosts();
-				setLoadingPosts(false);
-				toast.dark("💃 Yay! Your post has been uploaded.", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-				setLoadingPosts(false);
-				toast.error(
-					"😞 Bummer. Something went wrong while creating your post.",
-					{
+				if (res.error) {
+					console.log(res.error);
+					setLoadingPosts(false);
+					toast.error(
+						"😞 Bummer. Something went wrong while creating your post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					getPosts();
+					setLoadingPosts(false);
+					toast.dark("💃 Yay! Your post has been uploaded.", {
 						position: "top-center",
 						autoClose: 5000,
 						hideProgressBar: false,
@@ -79,8 +93,8 @@ function App() {
 						pauseOnHover: true,
 						draggable: true,
 						progress: undefined,
-					}
-				);
+					});
+				}
 			});
 	};
 
@@ -93,8 +107,6 @@ function App() {
 			</div>
 		);
 	}
-
-	const notify = () => toast("Wow so easy !");
 
 	return (
 		<div className="app">

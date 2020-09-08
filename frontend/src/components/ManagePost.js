@@ -11,14 +11,8 @@ function ManagePost({ visible, close, createPost }) {
 		if (!title || !content) return;
 		if (title.length > 50) return;
 
-		try {
-			createPost({ title, content });
-			close();
-			setTitle("");
-			setContent("");
-		} catch (err) {
-			console.log(err);
-		}
+		createPost({ title, content });
+		close();
 	};
 	return (
 		<Rodal
