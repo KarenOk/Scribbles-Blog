@@ -43,35 +43,35 @@ const Header = ({ showCreatePost }) => {
 					)}
 				</div>
 				<div className="social">
-					<a href="#!">
+					<a href="https://www.twitter.com/">
 						<img
 							className="social"
 							src={twitter}
 							alt="Reach out to us on twitter"
 						/>
 					</a>
-					<a href="#!">
+					<a href="https://www.facebook.com/">
 						<img
 							className="social"
 							src={facebook}
 							alt=" Reach out to us on facebook"
 						/>
 					</a>
-					<a href="#!">
+					<a href="https://www.instagram.com/">
 						<img
 							className="social"
 							src={instagram}
 							alt=" Reach out to us on instagram"
 						/>
 					</a>
-					<a href="#!">
+					<a href="https://www.linkedin.com/in/karenokonkwo/">
 						<img
 							className="social"
 							src={linkedin}
 							alt=" Reach out to us on linkedin"
 						/>
 					</a>
-					<a href="#!">
+					<a href="http://github.com/KarenOk">
 						<img
 							className="social"
 							src={github}
