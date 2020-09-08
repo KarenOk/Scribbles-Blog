@@ -351,7 +351,7 @@ nav .social img {
     margin-bottom: 30px;
 }
 
-.post-page .image-cont {
+.post-page header .image-cont {
     width: 60px;
     min-width: 60px;
     height: 60px;
@@ -374,7 +374,11 @@ nav .social img {
     margin: 2px 0;
 }
 
-.post-page header button {
+.post-page .actions {
+    width: auto;
+}
+
+.post-page button {
     width: 40px;
     background: transparent;
     border: none;
@@ -396,6 +400,81 @@ nav .social img {
 .post-page .content {
     white-space: pre-line;
     line-height: 25px;
+}
+
+.post-page .comments {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+.post-page .comments .image-cont {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 10px;
+}
+
+/* 
+.post-page .comments img {
+    border-radius: 50%;
+} */
+
+.post-page input {
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.post-page .comment-box {
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.post-page .comment-box>div:nth-of-type(2) {
+    flex: 1;
+}
+
+.post-page .comment-box p {
+    margin: 5px;
+}
+
+.post-page .comment-box .info {
+    font-weight: bolder;
+}
+
+.post-page .comment-box small {
+    font-weight: lighter;
+    font-size: 0.7em;
+    margin-left: 5px;
+}
+
+.post-page .comment-box .comment {
+    font-size: 0.9em;
+}
+
+.post-page .comments .icon {
+    width: 12px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.post-page .load {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.post-page .load button {
+    width: 200px;
+    padding: 10px 15px;
+    background-color: rgb(1, 1, 126);
+    color: white;
+    border-radius: 4px;
+    font-family: inherit;
+    font-weight: bolder;
+    font-size: 0.9em;
 }
 
 /* 
@@ -517,9 +596,26 @@ footer a:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    .post-item .app-header {
+    .post-item .header {
         flex-direction: column;
         align-items: flex-start;
+    }
+    .post-page header .top {
+        flex-direction: column;
+    }
+    .post-page .actions {
+        order: 1;
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .post-page .top>div:first-of-type {
+        order: 2;
+        align-self: flex-start;
+    }
+    .post-page header h2 {
+        font-size: 2.5em;
     }
 }
 
