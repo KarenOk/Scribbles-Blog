@@ -10,7 +10,7 @@ import instagram from "../images/instagram.png";
 const Header = ({ showCreatePost }) => {
 	const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
 	return (
-		<header>
+		<header className="app-header">
 			<div>
 				<img src={logo} alt="Scribbles" />
 				<h1> Scribbles </h1>

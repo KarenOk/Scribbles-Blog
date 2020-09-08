@@ -60,29 +60,29 @@ a, a:active, a:hover {
     background-color: turquoise;
 }
 
-/*  Header Section  */
+/*  .app-Header Section  */
 
-header {
+.app-header {
     text-align: center;
     font-family: 'Grandstander', cursive;
     font-size: 16px;
     padding: 5px 10px 0;
 }
 
-header img {
+.app-header img {
     width: 40px;
     height: 40px;
     margin-right: 10px;
 }
 
-header h1 {
+.app-header h1 {
     display: inline-block;
     margin-bottom: 0;
     font-size: 3em;
     color: rgb(1, 1, 126);
 }
 
-header p {
+.app-header p {
     font-size: 1.2em;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
@@ -383,20 +383,20 @@ footer a:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    .post-item .header {
+    .post-item .app-header {
         flex-direction: column;
         align-items: flex-start;
     }
 }
 
 @media only screen and (max-width: 500px) {
-    header {
+    .app-header {
         font-size: 14px;
     }
-    header p {
+    .app-header p {
         font-weight: 400;
     }
-    header .routes {
+    .app-header .routes {
         font-size: 1.2em;
         margin: 10px 0 20px;
     }
