@@ -25,8 +25,11 @@ class ScribblesTestCase(unittest.TestCase):
         cls.new_post = {
             "title": "Post title",
             "content": "Post body",
+            "author": "Bruce Lee",
+            "image_url": None
         }
-        cls.new_comment = {"comment": "Nice read!", "full_name": "Bruce Lee"}
+        cls.new_comment = {"comment": "Nice read!",
+                           "full_name": "Bruce Lee", "is_author": True, "image_url": None}
 
     def __create_post__(self):
         """ Helper method to create a new post """

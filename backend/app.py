@@ -70,12 +70,15 @@ def create_app():
         data = request.get_json()
         title = data.get("title", None)
         content = data.get("content", None)
+        author = data.get("author", None)
+        image_url = data.get("image_url", None)
 
-        if not content or not title or len(str(title)) > 140:
+        if not content or not title or not author or len(str(title)) > 50:
             abort(400)
 
         try:
-            post = Post(title=title, content=content)
+            post = Post(title=title, content=content,
+                        author=author, image_url=image_url)
             post.insert()
         except Exception:
             db.session.rollback()
@@ -101,8 +104,10 @@ def create_app():
         data = request.get_json()
         title = data.get("title", None)
         content = data.get("content", None)
+        author = data.get("author", None)
+        image_url = data.get("image_url", None)
 
-        if not title and not content:
+        if not title and not content and not author and not image_url:
             abort(400)
 
         try:
@@ -110,6 +115,10 @@ def create_app():
                 post.title = title
             if bool(content):
                 post.content = content
+            if bool(author):
+                post.author = author
+            if bool(image_url):
+                post.image_url = image_url
             post.last_modified = datetime.utcnow()
             post.update()
 
@@ -182,13 +191,15 @@ def create_app():
         data = request.get_json()
         comment_text = data.get("comment", None)
         full_name = data.get("full_name", None)
+        image_url = data.get("image_url", None)
+        is_author = data.get("is_author", None)
 
-        if not comment_text or not full_name:
+        if not comment_text or not full_name or not is_author:
             abort(400)
 
         try:
             comment = Comment(comment=comment_text,
-                              full_name=full_name, post_id=post_id)
+                              full_name=full_name, image_url=image_url, is_author=is_author, post_id=post_id)
             comment.insert()
         except:
             db.session.rollback()
