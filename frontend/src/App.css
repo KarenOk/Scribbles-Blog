@@ -375,11 +375,11 @@ footer {
 footer a {
     font-weight: bolder;
     display: inline-block;
-    transition: transform 0.5s ease-in-out;
 }
 
 footer a:hover {
-    transform: rotate(360deg);
+    transition: transform 0.4s ease-in;
+    transform: rotateX(360deg);
 }
 
 @media only screen and (max-width: 600px) {
