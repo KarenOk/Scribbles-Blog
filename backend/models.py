@@ -29,7 +29,7 @@ class Post(db.Model):
     title = db.Column(db.String(50), nullable=False)
     content = db.Column(db.String, nullable=False)
     author = db.Column(db.String(50), default="Anonymous", nullable=False)
-    image_url = db.Column(db.String(100))
+    image_url = db.Column(db.String)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow,  nullable=False)
     last_modified = db.Column(
@@ -73,7 +73,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(140), nullable=False)
     full_name = db.Column(db.String(50), default="Anonymous", nullable=False)
-    image_url = db.Column(db.String(100))
+    image_url = db.Column(db.String)
     is_author = db.Column(db.Boolean, default=False, nullable=False)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
