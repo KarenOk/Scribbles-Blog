@@ -269,7 +269,7 @@ nav .social img {
     margin: 8px;
 }
 
-.manage-post button:hover {
+.manage-post button:hover:not(:disabled) {
     transform: scale(1.1)
 }
 
