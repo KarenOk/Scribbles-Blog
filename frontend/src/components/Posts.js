@@ -47,7 +47,7 @@ const Posts = ({ posts, getPosts, loading }) => {
 						</div>
 					) : (
 						posts.posts.map((post, index) => (
-							<Link to={`/post/${post.id}`}>
+							<Link to={`/post/${post.id}`} key={index}>
 								<PostItem key={index} post={post} />
 							</Link>
 						))
