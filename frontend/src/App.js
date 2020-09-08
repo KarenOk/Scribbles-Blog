@@ -10,7 +10,12 @@ import logo from "./logo.png";
 import ManagePost from "./components/ManagePost";
 
 function App() {
-	const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+	const {
+		isAuthenticated,
+		isLoading,
+		getAccessTokenSilently,
+		user,
+	} = useAuth0();
 
 	const [token, setToken] = useState(null);
 
@@ -51,11 +56,29 @@ function App() {
 					setPosts(res);
 				}
 				setLoadingPosts(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Darn. Something went wrong while fetching your posts.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+				setLoadingPosts(false);
 			});
 	};
 
 	const createPost = (body) => {
 		setLoadingPosts(true);
+		body.author = user.name;
+		body.image_url = user.picture;
 
 		fetch("http://localhost:5000/posts", {
 			method: "POST",
@@ -95,6 +118,22 @@ function App() {
 						progress: undefined,
 					});
 				}
+			})
+			.catch((err) => {
+				console.log(err);
+				setLoadingPosts(false);
+				toast.error(
+					"😞 Bummer. Something went wrong while creating your post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 			});
 	};
 

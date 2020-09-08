@@ -3,10 +3,19 @@ import React from "react";
 const PostItem = ({ post }) => {
 	return (
 		<article className="post-item">
-			<h3> {post.title} </h3>
+			<section className="header d-flex align-items-center">
+				<div className="image-cont">
+					{post.image_url ? (
+						<img src={post.image_url} alt={post.author} />
+					) : (
+						<div />
+					)}
+				</div>
+				<h3> {post.title} </h3>
+			</section>
 			<p className="details">
 				{" "}
-				Written by <span className="highlight"> Karen Okonkwo </span> on{" "}
+				Written by <span className="highlight"> {post.author} </span> on{" "}
 				<span className="highlight">
 					{" "}
 					{new Date(post.date_created).toLocaleDateString(undefined, {
