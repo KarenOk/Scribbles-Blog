@@ -382,6 +382,9 @@ footer a:hover {
     header {
         font-size: 14px;
     }
+    header p {
+        font-weight: 400;
+    }
     header .routes {
         font-size: 1.2em;
         margin: 10px 0 20px;
