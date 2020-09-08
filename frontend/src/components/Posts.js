@@ -34,7 +34,7 @@ const Posts = ({ posts, getPosts, loading }) => {
 
 	return (
 		<div className="posts">
-			{posts ? (
+			{posts && posts.posts.length ? (
 				<>
 					{loading ? (
 						<div
