@@ -35,11 +35,9 @@ class Post(db.Model):
     comments = db.relationship(
         "Comment",  backref="post", lazy=False, cascade="all, delete-orphan")
 
-    def __init__(self, title, content, date_created=datetime.utcnow(), last_modified=datetime.utcnow()):
+    def __init__(self, title, content):
         self.title = title
         self.content = content
-        self.date_created = date_created
-        self.last_modified = last_modified
 
     def insert(self):
         db.session.add(self)
