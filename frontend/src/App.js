@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BASE_URL } from "./BASE_URL";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import Footer from "./components/Footer";
 import Banner from "./components/Banner";
-import logo from "./logo.png";
 import ManagePost from "./components/ManagePost";
+import logo from "./logo.png";
 
 function App() {
 	const {
@@ -35,7 +36,7 @@ function App() {
 
 	const getPosts = (page) => {
 		setLoadingPosts(true);
-		fetch("http://localhost:5000/posts" + (page ? `?page=${page}` : ""))
+		fetch(`${BASE_URL}/posts` + (page ? `?page=${page}` : ""))
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.error) {
@@ -80,7 +81,7 @@ function App() {
 		body.author = user.name;
 		body.image_url = user.picture;
 
-		fetch("http://localhost:5000/posts", {
+		fetch(`${BASE_URL}/posts`, {
 			method: "POST",
 			body: JSON.stringify(body),
 			headers: {
