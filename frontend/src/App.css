@@ -80,7 +80,9 @@ header h1 {
 
 header p {
     font-size: 1.2em;
-    font-weight: lighter;
+    /* font-weight: 40; */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
 }
 
 nav {
@@ -156,6 +158,7 @@ nav .social img {
 
 .post-item .image-cont {
     width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: #ddd;
@@ -376,6 +379,13 @@ footer a {
 
 footer a:hover {
     transform: rotate(360deg);
+}
+
+@media only screen and (max-width: 600px) {
+    .post-item .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 @media only screen and (max-width: 500px) {
