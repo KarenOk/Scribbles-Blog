@@ -27,6 +27,7 @@ function ManagePost({ mode, visible, close, post, createPost, editPost }) {
 	};
 	return (
 		<Rodal
+			animation="slideRight"
 			visible={visible}
 			onClose={() => close()}
 			className="manage-post"
