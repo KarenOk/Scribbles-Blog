@@ -194,7 +194,7 @@ def create_app():
         image_url = data.get("image_url", None)
         is_author = data.get("is_author", None)
 
-        if not comment_text or not full_name or not is_author:
+        if not comment_text or not full_name or is_author is None:
             abort(400)
 
         try:
