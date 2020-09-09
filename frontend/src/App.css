@@ -43,6 +43,10 @@ a, a:active, a:hover {
     opacity: 0.3;
 }
 
+button {
+    font-family: inherit;
+}
+
 /* 
  *
  *
@@ -237,23 +241,6 @@ nav .social img {
  *
  *
  */
-
-.manage-post .rodal-dialog {
-    max-width: 500px;
-    width: 90%;
-    height: 90vh;
-    overflow-y: scroll;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-
-.manage-post .rodal-close:hover {
-    transform: scale(1.2);
-}
-
-.manage-post .rodal-close:after, .manage-post .rodal-close:before {
-    background: red;
-}
 
 .manage-post h1 {
     font-size: 1.8em;
@@ -467,6 +454,78 @@ nav .social img {
     font-family: inherit;
     font-weight: bolder;
     font-size: 0.9em;
+}
+
+/* 
+ *
+ *
+  Confirm Delete 
+ *
+ *
+ */
+
+.confirm-delete .body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.confirm-delete .body>* {
+    margin-bottom: 0px;
+}
+
+.confirm-delete span {
+    font-size: 4em;
+    color: red;
+}
+
+.confirm-delete h2 {
+    font-size: 2em;
+}
+
+.confirm-delete .actions {
+    margin-top: 20px;
+}
+
+.confirm-delete .actions button {
+    color: white;
+    padding: 10px 30px;
+    width: auto;
+    font-size: 1em;
+    font-weight: bolder;
+}
+
+.confirm-delete button.yes {
+    background-color: rgb(72, 236, 72);
+}
+
+.confirm-delete button.no {
+    background-color: rgb(241, 66, 66);
+}
+
+/* 
+ *
+ *
+  Rodal generic styles 
+ *
+ *
+ */
+
+.rodal-dialog {
+    max-width: 500px;
+    width: 90%;
+    height: 90vh;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.rodal-close:hover {
+    transform: scale(1.2);
+}
+
+.rodal-close:after, .rodal-close:before {
+    background: red;
 }
 
 /* 

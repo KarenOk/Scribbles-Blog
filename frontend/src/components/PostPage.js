@@ -7,8 +7,9 @@ import deleteIcon from "../images/delete-icon.svg";
 import empty from "../images/empty.svg";
 import logo from "../logo.png";
 import ManagePost from "./ManagePost";
+import ConfirmDelete from "./ConfirmDelete";
 
-const PostPage = ({ match, token }) => {
+const PostPage = ({ match, token, history }) => {
 	const { user } = useAuth0();
 	const role = (user && user["https://scribbles-blog.com/roles"][0]) || null;
 	const [post, setPost] = useState(null);
@@ -18,6 +19,8 @@ const PostPage = ({ match, token }) => {
 	const [loadingPost, setLoadingPost] = useState(false);
 	const [loadingComments, setLoadingComments] = useState(false);
 	const [showManagePost, setShowManagePost] = useState(false);
+	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState(null);
 
 	useEffect(() => {
 		getPost();
@@ -252,6 +255,100 @@ const PostPage = ({ match, token }) => {
 			});
 	};
 
+	const deletePost = () => {
+		fetch(`${BASE_URL}/posts/${match.params.id}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					toast.error("😞 Uh-oh. Your post could not be deleted.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				} else {
+					toast.success("💃 Yes! Your post was deleted.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+					history.push("/");
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error("😞 Uh-oh. Your post could not be deleted.", {
+					position: "top-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			});
+	};
+
+	const deleteComment = (comment_id) => {
+		fetch(`${BASE_URL}/comments/${comment_id}`, {
+			method: "DELETE",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					toast.error("😞 Uh-oh. This comment could not be deleted.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				} else {
+					toast.success("💃 Yes! The comment was deleted successfully.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+					getComments(1, true);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error("😞 Uh-oh. This comment could not be deleted.", {
+					position: "top-center",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			});
+	};
+
 	if (loadingPost) {
 		return (
 			<div className="loader d-flex align-items-center justify-content-center">
@@ -302,7 +399,16 @@ const PostPage = ({ match, token }) => {
 							>
 								<img src={editIcon} alt="Edit post" />
 							</button>
-							<button title="Delete this post">
+							<button
+								title="Delete this post"
+								onClick={() => {
+									setDeleteInfo({
+										type: "post",
+										onConfirm: deletePost,
+									});
+									setShowConfirmDelete(true);
+								}}
+							>
 								<img src={deleteIcon} alt="Delete post" />
 							</button>
 						</div>
@@ -319,8 +425,10 @@ const PostPage = ({ match, token }) => {
 
 			<section className="comments">
 				<h3>
-					{post.no_of_comments}{" "}
-					{post.no_of_comments === 1 ? "comment" : "comments"}
+					{comments
+						? comments.total_comments +
+						  (comments.total_comments === 1 ? " comment" : " comments")
+						: "0 comments"}
 				</h3>
 				{role && (
 					<div className="d-flex">
@@ -383,7 +491,15 @@ const PostPage = ({ match, token }) => {
 								</div>
 								{role === "author" && (
 									<div>
-										<button>
+										<button
+											onClick={() => {
+												setDeleteInfo({
+													type: "comment",
+													onConfirm: () => deleteComment(comment.id),
+												});
+												setShowConfirmDelete(true);
+											}}
+										>
 											<img
 												src={deleteIcon}
 												alt="Delete comment"
@@ -415,6 +531,11 @@ const PostPage = ({ match, token }) => {
 				post={post}
 				editPost={editPost}
 				close={() => setShowManagePost(false)}
+			/>
+			<ConfirmDelete
+				visible={showConfirmDelete}
+				close={() => setShowConfirmDelete(false)}
+				deleteInfo={deleteInfo}
 			/>
 		</article>
 	);
