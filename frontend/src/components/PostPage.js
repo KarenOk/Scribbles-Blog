@@ -10,6 +10,7 @@ import ManagePost from "./ManagePost";
 
 const PostPage = ({ match, token }) => {
 	const { user } = useAuth0();
+	const role = (user && user["https://scribbles-blog.com/roles"][0]) || null;
 	const [post, setPost] = useState(null);
 	const [newComment, setNewComment] = useState("");
 	const [comments, setComments] = useState(null);
@@ -131,7 +132,7 @@ const PostPage = ({ match, token }) => {
 		let body = {
 			full_name: user.name,
 			image_url: user.picture,
-			is_author: user["https://scribbles-blog.com/roles"][0] === "author",
+			is_author: role === "author",
 			comment: newComment,
 		};
 
@@ -293,17 +294,19 @@ const PostPage = ({ match, token }) => {
 							</small>
 						</div>
 					</div>
-					<div className="actions">
-						<button
-							title="Edit this post"
-							onClick={() => setShowManagePost(true)}
-						>
-							<img src={editIcon} alt="Edit post" />
-						</button>
-						<button title="Delete this post">
-							<img src={deleteIcon} alt="Delete post" />
-						</button>
-					</div>
+					{role === "author" && (
+						<div className="actions">
+							<button
+								title="Edit this post"
+								onClick={() => setShowManagePost(true)}
+							>
+								<img src={editIcon} alt="Edit post" />
+							</button>
+							<button title="Delete this post">
+								<img src={deleteIcon} alt="Delete post" />
+							</button>
+						</div>
+					)}
 				</div>
 				<h2>{post.title}</h2>
 				<small>
@@ -319,26 +322,28 @@ const PostPage = ({ match, token }) => {
 					{post.no_of_comments}{" "}
 					{post.no_of_comments === 1 ? "comment" : "comments"}
 				</h3>
-				<div className="d-flex">
-					<div className="image-cont">
-						{user.picture ? (
-							<img src={user.picture} alt={user.name} />
-						) : (
-							<div />
-						)}
+				{role && (
+					<div className="d-flex">
+						<div className="image-cont">
+							{user.picture ? (
+								<img src={user.picture} alt={user.name} />
+							) : (
+								<div />
+							)}
+						</div>
+						<input
+							aria-label="Leave a comment"
+							placeholder="Leave a comment"
+							maxLength="140"
+							value={newComment}
+							onChange={(e) => setNewComment(e.target.value)}
+							onKeyUp={(e) =>
+								e.keyCode === 13 && newComment ? createComment() : null
+							}
+							required
+						/>
 					</div>
-					<input
-						aria-label="Leave a comment"
-						placeholder="Leave a comment"
-						maxLength="140"
-						value={newComment}
-						onChange={(e) => setNewComment(e.target.value)}
-						onKeyUp={(e) =>
-							e.keyCode === 13 && newComment ? createComment() : null
-						}
-						required
-					/>
-				</div>
+				)}
 
 				<div className="comments-cont">
 					{!comments || !comments.total_comments ? (
@@ -376,15 +381,17 @@ const PostPage = ({ match, token }) => {
 									</p>
 									<p className="comment"> {comment.comment}</p>
 								</div>
-								<div>
-									<button>
-										<img
-											src={deleteIcon}
-											alt="Delete comment"
-											className="icon"
-										/>
-									</button>
-								</div>
+								{role === "author" && (
+									<div>
+										<button>
+											<img
+												src={deleteIcon}
+												alt="Delete comment"
+												className="icon"
+											/>
+										</button>
+									</div>
+								)}
 							</div>
 						))
 					)}
