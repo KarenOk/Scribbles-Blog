@@ -429,7 +429,7 @@ const PostPage = ({ match, token, history }) => {
 						  (comments.total_comments === 1 ? " comment" : " comments")
 						: "0 comments"}
 				</h3>
-				{role && (
+				{role ? (
 					<div className="d-flex">
 						<div className="image-cont">
 							{user.picture ? (
@@ -453,6 +453,8 @@ const PostPage = ({ match, token, history }) => {
 							required
 						/>
 					</div>
+				) : (
+					<p> You have to be logged in to publish a comment.</p>
 				)}
 
 				<div className="comments-cont">
