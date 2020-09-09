@@ -169,8 +169,10 @@ def create_app():
         if not post:
             abort(404)
 
+        comments = Comment.query.order_by(desc(Comment.date_created)).filter(Comment.post_id == post_id).all()
+
         paginated_comments = paginator(
-            request=request, data=post.comments, items_per_page=10)
+            request=request, data=comments, items_per_page=5)
 
         return jsonify({
             "success": True,
