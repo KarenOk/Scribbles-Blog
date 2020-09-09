@@ -157,11 +157,7 @@ function App() {
 				<div className="container">
 					<Header showCreatePost={() => setShowManagePost(true)} />
 					<Switch>
-						<Route
-							path="/post/:id"
-							exact
-							render={() => <Post post={posts ? posts.posts[0] : null} />}
-						/>
+						<Route path="/post/:id" exact component={Post} />
 						<Route
 							path="/"
 							render={() => (

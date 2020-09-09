@@ -5,17 +5,65 @@ import { BASE_URL } from "../BASE_URL";
 import editIcon from "../images/edit-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
 import empty from "../images/empty.svg";
+import logo from "../logo.png";
 
-const PostPage = ({ post }) => {
+const PostPage = ({ match }) => {
 	const { user } = useAuth0();
+	const [post, setPost] = useState(null);
 	const [comments, setComments] = useState(null);
 	const [commentsPage, setCommentsPage] = useState(1);
 	const [loadingPost, setLoadingPost] = useState(false);
 	const [loadingComments, setLoadingComments] = useState(false);
 
 	useEffect(() => {
-		getComments();
+		getPost();
 	}, []);
+
+	useEffect(() => {
+		if (post) getComments(1);
+	}, [post]);
+
+	const getPost = (page) => {
+		setLoadingPost(true);
+		fetch(`${BASE_URL}/posts/${match.params.id}`)
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					toast.error(
+						"😞 Darn. Something went wrong while fetching this post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					setPost(res.post);
+				}
+				setLoadingPost(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Darn. Something went wrong while fetching the comments for this post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+				setLoadingComments(false);
+			});
+	};
 
 	const getComments = (page) => {
 		if (!post) return;
@@ -27,7 +75,7 @@ const PostPage = ({ post }) => {
 				if (res.error) {
 					console.log(res.error);
 					toast.error(
-						"😞 Darn. Something went wrong while fetching your comments.",
+						"😞 Darn. Something went wrong while fetching the comments for this post.",
 						{
 							position: "top-center",
 							autoClose: 5000,
@@ -51,7 +99,7 @@ const PostPage = ({ post }) => {
 			.catch((err) => {
 				console.log(err);
 				toast.error(
-					"😞 Darn. Something went wrong while fetching your posts.",
+					"😞 Darn. Something went wrong while fetching the comments for this post.",
 					{
 						position: "top-center",
 						autoClose: 5000,
@@ -66,13 +114,15 @@ const PostPage = ({ post }) => {
 			});
 	};
 
-	const comment = {
-		comment:
-			"The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz!",
-		full_name: "Karen Okonkwo",
-		date_created: new Date(),
-		image_url: null,
-	};
+	if (loadingPost) {
+		return (
+			<div className="loader d-flex align-items-center justify-content-center">
+				<div className="lds-dual-ring">
+					<img src={logo} alt="Loading..." />
+				</div>
+			</div>
+		);
+	}
 
 	if (!post) {
 		return (
@@ -119,19 +169,14 @@ const PostPage = ({ post }) => {
 						</button>
 					</div>
 				</div>
-				<h2>BE MULTIPLY SET YOU'RE, BEARING OWN MAKE PLACE APP</h2>
+				<h2>{post.title}</h2>
 				<small>
 					Last modified at
 					<span className="highlight"> {post.last_modified} </span>
 				</small>
 			</header>
 
-			<section className="content">
-				{post.content}
-				{
-					"Primis eros velit lacinia curae; test diam congue volutpat. Convallis, tempus. Curabitur ut lacinia taciti sodales. Vitae ut placerat orci elit netus ridiculus habitasse senectus Turpis augue. Hac, rutrum ornare integer.  \n \n Phasellus at iaculis tempor et quis justo montes interdum fusce purus lacus. Commodo. Vehicula tempus Ut eros eget vel curae; porttitor penatibus Laoreet ultrices. Vestibulum. Nisl vestibulum ridiculus, erat. Sociosqu a nascetur, primis dictum curabitur ridiculus.  Sociis orci ligula cras consectetuer vitae ipsum, pede lectus suscipit. Cubilia dignissim leo vel consequat. Leo convallis senectus suspendisse eleifend dapibus ridiculus. \n \n  Metus, interdum semper, ultricies vehicula tristique euismod feugiat pellentesque nascetur dolor elementum. "
-				}
-			</section>
+			<section className="content">{post.content}</section>
 
 			<section className="comments">
 				<h3>
