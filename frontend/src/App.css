@@ -427,6 +427,18 @@ nav .social img {
     font-weight: lighter;
     font-size: 0.7em;
     margin-left: 5px;
+    margin-right: 10px;
+}
+
+.post-page .comment-box mark {
+    display: inline-block;
+    font-size: 0.8em;
+    font-weight: lighter;
+    font-family: sans-serif;
+    background-color: rgb(28, 28, 223);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 1px;
 }
 
 .post-page .comment-box .comment {
@@ -684,6 +696,13 @@ footer a:hover {
     .post-page .comment-box small {
         display: block;
         margin-left: 0;
+        margin-bottom: 5px;
+    }
+    .post-page .comment-box mark {
         margin-bottom: 10px;
+    }
+    .post-page .comments .image-cont {
+        align-self: flex-start;
+        margin-top: 15px;
     }
 }

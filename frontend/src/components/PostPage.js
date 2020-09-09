@@ -486,6 +486,7 @@ const PostPage = ({ match, token, history }) => {
 												}
 											)}{" "}
 										</small>{" "}
+										{comment.is_author && <mark> Author </mark>}
 									</p>
 									<p className="comment"> {comment.comment}</p>
 								</div>
