@@ -1,11 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../BASE_URL";
 import editIcon from "../images/edit-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
 import empty from "../images/empty.svg";
 
 const PostPage = ({ post }) => {
 	const { user } = useAuth0();
+	const [comments, setComments] = useState(null);
+	const [commentsPage, setCommentsPage] = useState(1);
+	const [loadingPost, setLoadingPost] = useState(false);
+	const [loadingComments, setLoadingComments] = useState(false);
+
+	useEffect(() => {
+		getComments();
+	}, []);
+
+	const getComments = (page) => {
+		if (!post) return;
+
+		setLoadingComments(true);
+		fetch(`${BASE_URL}/posts/${post.id}/comments?page=${commentsPage}`)
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					toast.error(
+						"😞 Darn. Something went wrong while fetching your comments.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					if (comments) {
+						const temp = [...comments.comments];
+						temp.push(...res.comments);
+						setComments({ ...comments, comments: temp });
+					} else setComments(res);
+					setCommentsPage(commentsPage + 1);
+				}
+				setLoadingComments(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Darn. Something went wrong while fetching your posts.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+				setLoadingComments(false);
+			});
+	};
 
 	const comment = {
 		comment:
@@ -96,42 +155,62 @@ const PostPage = ({ post }) => {
 				</form>
 
 				<div className="comments-cont">
-					{[1, 2, 3, 4].map((item) => (
-						<div className="comment-box d-flex" key={item}>
-							<div className="image-cont">
-								{comment.picture ? (
-									<img src={comment.picture} alt={comment.name} />
-								) : (
-									<div />
-								)}
+					{!comments || !comments.total_comments ? (
+						<p> No comments found </p>
+					) : (
+						comments.comments.map((comment) => (
+							<div className="comment-box d-flex" key={comment.id}>
+								<div className="image-cont">
+									{comment.image_url ? (
+										<img src={comment.image_url} alt={comment.full_name} />
+									) : (
+										<div />
+									)}
+								</div>
+								<div>
+									<p className="info">
+										{comment.full_name}{" "}
+										<small>
+											{" "}
+											{new Date(comment.date_created).toLocaleString(
+												undefined,
+												{
+													year: "numeric",
+													month: "short",
+													day: "numeric",
+													hour: "2-digit",
+													minute: "2-digit",
+												}
+											)}{" "}
+										</small>{" "}
+									</p>
+									<p className="comment"> {comment.comment}</p>
+								</div>
+								<div>
+									<button>
+										<img
+											src={deleteIcon}
+											alt="Delete comment"
+											className="icon"
+										/>
+									</button>
+								</div>
 							</div>
-							<div>
-								<p className="info">
-									{comment.full_name}{" "}
-									<small>
-										{" "}
-										{comment.date_created.toLocaleString(undefined, {
-											year: "numeric",
-											month: "short",
-											day: "numeric",
-											hour: "2-digit",
-											minute: "2-digit",
-										})}{" "}
-									</small>{" "}
-								</p>
-								<p className="comment"> {comment.comment}</p>
-							</div>
-							<div>
-								<button>
-									<img src={deleteIcon} alt="Delete comment" className="icon" />
-								</button>
-							</div>
-						</div>
-					))}
+						))
+					)}
 				</div>
-				<div className="load">
-					<button> Load more comments</button>
-				</div>
+				{(comments && !comments.comments.length) ||
+				(comments &&
+					comments.comments.length !== 0 &&
+					comments.total_comments <= comments.comments.length) ? (
+					<div />
+				) : (
+					<div className="load">
+						<button onClick={getComments} disabled={loadingComments}>
+							{loadingComments ? "Loading..." : "Load more comments"}
+						</button>
+					</div>
+				)}
 			</section>
 		</article>
 	);
