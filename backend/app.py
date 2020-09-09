@@ -61,6 +61,21 @@ def create_app():
             "posts": paginated_posts
         })
 
+    @app.route("/posts/<int:post_id>")
+    def get_one_post(post_id):
+        """ 
+            Endpoint to get a paginated a particular post
+        """
+        post = Post.query.get(post_id)
+
+        if not post:
+            abort(404)
+
+        return jsonify({
+            "success": True,
+            "post": post.format()
+        })
+
     @app.route("/posts", methods=["POST"])
     @requires_auth("create:post")
     def create_post(payload):

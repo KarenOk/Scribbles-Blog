@@ -77,6 +77,38 @@
 					"response": []
 				},
 				{
+					"name": "Get a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc996fa4-2b7a-4245-92b1-3f51b3fe3cd9",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create a post",
 					"event": [
 						{
@@ -340,6 +372,38 @@
 					"response": []
 				},
 				{
+					"name": "Get a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "547d7e50-4130-4adf-bf76-73c2352ccb93",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create a post",
 					"event": [
 						{
@@ -565,7 +629,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDUyZGU5ZWY1ZjAwNjdiNjg4M2EiLCJhdWQiOiJzY3JpYmJsZXMtYmxvZyIsImlhdCI6MTU5OTQ4NDQ5NiwiZXhwIjoxNTk5NTcwODk2LCJhenAiOiJWMGVFbnZVcFU3RGpIM1Z5NDFpNWRmbE5HSXU4UEhQUyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiXX0.P7MBGkml3Io1vsPW_mVLqpbR5WOkUAfqbV6FBiK4Ruqan5MBWfiJ4J-s1aeH6iZOu6gpL0vayhqFpkhc_HGjXne7gqfGdsFOosC266nEWXOwEC7GkgcYZEFLxNOHjDa1aNem4cX87nOu3hy30TgZWJgZdVesQ8cQX6DyvW_QEUiHOvJx8wP9sORgMDLFD1fAo2lEYYV7Yjc6i8Iif9Ax9q1nF6_cIJUCK38DJCRrakdf-CIKuWom3AUNckkKhWi5ADaLzlsnxtfMMWyfLQJH3RfFBq0XaBG4B6POd2hQ1ftz66mzcDTp6WsBidqXBnmkX51_hCFb8c4O7USxp1ubpw",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDUyZGU5ZWY1ZjAwNjdiNjg4M2EiLCJhdWQiOlsic2NyaWJibGVzLWJsb2ciLCJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE1OTk2MTA1ODcsImV4cCI6MTU5OTY5Njk4NywiYXpwIjoiVjBlRW52VXBVN0RqSDNWeTQxaTVkZmxOR0l1OFBIUFMiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiXX0.RheDphz-NfHfRpAG9W6KS1DUTNhkvClWSCCi5Lmbf1xy5Pm-M9RiaA50SzsQmEhkTBCBT2fJrz8FL5aXpeKiluozA1ep-YRUOi_ZLI7TEmFXXfXj38VniBhdbySzxj6Wyq4H3OOZxHoAsRAL9Ak-gVq0pzk06r_GtXkQlxPEQqvdFZgtWm4_vrD1s78rk64mmxaVlkBQtUpqGTuDtxxgA7VaQF9znbPeMlg6vQj1NFK9UK2u0BrTrV8HXqQoHBzM3UI-3lXdOleEEzqfuOC5AQyOb5CSqMp1wuAbPgpLIotq6DK-HzEQ676GL43DY_d76t3dm_fQuc3ztgBDZCQc-Q",
 						"type": "string"
 					}
 				]
@@ -629,6 +693,38 @@
 									"key": "page",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "171d63bd-025d-4ff3-bcb5-180e84bf8908",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/posts/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"posts",
+								"1"
 							]
 						}
 					},
@@ -914,7 +1010,7 @@
 	],
 	"variable": [
 		{
-			"id": "2c0093f2-0fe8-4ba8-9488-5ca05df8d332",
+			"id": "71cf48db-cb68-4b36-a14b-2e9ecd8e86fa",
 			"key": "host",
 			"value": "localhost:5000"
 		}

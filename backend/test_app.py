@@ -50,6 +50,25 @@ class ScribblesTestCase(unittest.TestCase):
     def test_index_route(self):
         res = self.client().get("/")
         self.assertEqual(res.status_code, 200)
+    
+    def test_get_one_post(self):
+        post = Post(title=self.new_post["title"], content=self.new_post["content"], author=self.new_post["author"], image_url=self.new_post["image_url"])
+        post.insert()
+
+        res = self.client().get(f"/posts/{post.id}")
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertIsNotNone(data["post"])
+
+    def test_get_one_post_not_found(self):
+        res = self.client().get("/posts/1000")
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data["error"], 404)
+        self.assertEqual(data["success"], False)
 
     def test_get_paginated_posts(self):
         res = self.client().get("/posts")
