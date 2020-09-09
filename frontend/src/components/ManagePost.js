@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Rodal from "rodal";
 
-function ManagePost({ visible, close, createPost }) {
+function ManagePost({ mode, visible, close, post, createPost, editPost }) {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
+
+	useEffect(() => {
+		if (mode === "edit" && post) {
+			setTitle(post.title);
+			setContent(post.content);
+		}
+	}, [post]);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
@@ -11,7 +18,11 @@ function ManagePost({ visible, close, createPost }) {
 		if (!title || !content) return;
 		if (title.length > 50) return;
 
-		createPost({ title, content });
+		if (mode === "edit") {
+			editPost({ title, content });
+		} else {
+			createPost({ title, content });
+		}
 		close();
 	};
 	return (
@@ -22,12 +33,12 @@ function ManagePost({ visible, close, createPost }) {
 			height={null}
 			width={null}
 		>
-			<h1> Create a new post </h1>
-			<form id="manage-post" onSubmit={onSubmit}>
+			{mode === "edit" ? <h1> Edit Post </h1> : <h1> Create a new post </h1>}
+			<form id={`manage-post-${mode}`} onSubmit={onSubmit}>
 				<div className="form-group">
 					<label htmlFor="title"> Post Title </label>
 					<input
-						id="title"
+						id={`title-${mode}`}
 						name="title"
 						required
 						value={title}
@@ -39,7 +50,7 @@ function ManagePost({ visible, close, createPost }) {
 				<div className="form-group">
 					<label htmlFor="title"> Post Content </label>
 					<textarea
-						id="content"
+						id={`manage-post-${title}`}
 						name="content"
 						required
 						value={content}
@@ -50,7 +61,7 @@ function ManagePost({ visible, close, createPost }) {
 
 			<div className="actions">
 				<button onClick={() => close()}> Cancel </button>
-				<button form="manage-post" disabled={!title || !content}>
+				<button form={`manage-post-${mode}`} disabled={!title || !content}>
 					Submit
 				</button>
 			</div>

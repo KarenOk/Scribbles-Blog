@@ -297,23 +297,24 @@ nav .social img {
     justify-content: flex-end;
 }
 
-.manage-post button {
+.manage-post .actions button {
     border: none;
     border: 2px solid #222;
     border-radius: 3px;
     padding: 8px 20px;
     margin: 8px;
+    width: auto;
 }
 
-.manage-post button:hover:not(:disabled) {
+.manage-post .actions button:hover:not(:disabled) {
     transform: scale(1.1)
 }
 
-.manage-post button:first-of-type {
+.manage-post .actions button:first-of-type {
     background-color: white;
 }
 
-.manage-post button:last-of-type {
+.manage-post .actions button:last-of-type {
     background-color: black;
     color: white
 }

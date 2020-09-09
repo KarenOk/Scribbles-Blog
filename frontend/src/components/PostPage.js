@@ -6,6 +6,7 @@ import editIcon from "../images/edit-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
 import empty from "../images/empty.svg";
 import logo from "../logo.png";
+import ManagePost from "./ManagePost";
 
 const PostPage = ({ match, token }) => {
 	const { user } = useAuth0();
@@ -15,6 +16,7 @@ const PostPage = ({ match, token }) => {
 	const [commentsPage, setCommentsPage] = useState(1);
 	const [loadingPost, setLoadingPost] = useState(false);
 	const [loadingComments, setLoadingComments] = useState(false);
+	const [showManagePost, setShowManagePost] = useState(false);
 
 	useEffect(() => {
 		getPost();
@@ -23,10 +25,6 @@ const PostPage = ({ match, token }) => {
 	useEffect(() => {
 		if (post) getComments(1);
 	}, [post]);
-
-	useEffect(() => {
-		console.log(comments);
-	}, [comments]);
 
 	const getPost = (page) => {
 		setLoadingPost(true);
@@ -96,7 +94,6 @@ const PostPage = ({ match, token }) => {
 						}
 					);
 				} else {
-					console.log(res.comments);
 					if (clear) {
 						setComments(res);
 						setCommentsPage(2);
@@ -194,6 +191,66 @@ const PostPage = ({ match, token }) => {
 			});
 	};
 
+	const editPost = (body) => {
+		body.image_url = post.image_url;
+		body.full_name = post.author;
+
+		fetch(`${BASE_URL}/posts/${post.id}`, {
+			method: "PATCH",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					// setLoadingComments(false);
+					toast.error(
+						"😞 Bummer. Something went wrong while editing your post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					console.log(res);
+					getPost();
+					toast.dark("💃 Whoop! Your post has been edited.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Bummer. Something went wrong while editing your post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+			});
+	};
+
 	if (loadingPost) {
 		return (
 			<div className="loader d-flex align-items-center justify-content-center">
@@ -237,7 +294,10 @@ const PostPage = ({ match, token }) => {
 						</div>
 					</div>
 					<div className="actions">
-						<button title="Edit this post">
+						<button
+							title="Edit this post"
+							onClick={() => setShowManagePost(true)}
+						>
 							<img src={editIcon} alt="Edit post" />
 						</button>
 						<button title="Delete this post">
@@ -342,6 +402,13 @@ const PostPage = ({ match, token }) => {
 					</div>
 				)}
 			</section>
+			<ManagePost
+				mode="edit"
+				visible={showManagePost}
+				post={post}
+				editPost={editPost}
+				close={() => setShowManagePost(false)}
+			/>
 		</article>
 	);
 };
