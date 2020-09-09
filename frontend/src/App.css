@@ -361,7 +361,7 @@ nav .social img {
     height: 100%;
 }
 
-.post-page .author {
+.post-page .user {
     border-radius: 50%;
     object-fit: cover;
 }
@@ -404,18 +404,13 @@ nav .social img {
 }
 
 .post-page .comments .image-cont {
-    width: 44px;
-    min-width: 44px;
-    height: 44px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: #ddd;
     margin-right: 10px;
 }
-
-/* 
-.post-page .comments img {
-    border-radius: 50%;
-} */
 
 .post-page input {
     width: 100%;

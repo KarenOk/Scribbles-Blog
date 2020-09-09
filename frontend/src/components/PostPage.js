@@ -219,11 +219,7 @@ const PostPage = ({ match, token }) => {
 					<div className="d-flex align-items-center">
 						<div className="image-cont">
 							{post.image_url ? (
-								<img
-									src={post.image_url}
-									alt={post.author}
-									className="author"
-								/>
+								<img src={post.image_url} alt={post.author} className="user" />
 							) : (
 								<div />
 							)}
@@ -292,7 +288,11 @@ const PostPage = ({ match, token }) => {
 							<div className="comment-box d-flex" key={comment.id}>
 								<div className="image-cont">
 									{comment.image_url ? (
-										<img src={comment.image_url} alt={comment.full_name} />
+										<img
+											src={comment.image_url}
+											alt={comment.full_name}
+											className="user"
+										/>
 									) : (
 										<div />
 									)}
