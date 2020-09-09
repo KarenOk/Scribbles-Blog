@@ -165,7 +165,6 @@ const PostPage = ({ match, token, history }) => {
 						}
 					);
 				} else {
-					setNewComment("");
 					getComments(1, true);
 					toast.dark("💃 Whoop! Your comment has been published.", {
 						position: "top-center",
@@ -445,9 +444,12 @@ const PostPage = ({ match, token, history }) => {
 							maxLength="140"
 							value={newComment}
 							onChange={(e) => setNewComment(e.target.value)}
-							onKeyUp={(e) =>
-								e.keyCode === 13 && newComment ? createComment() : null
-							}
+							onKeyUp={(e) => {
+								if (e.keyCode === 13 && newComment) {
+									createComment();
+									setNewComment("");
+								}
+							}}
 							required
 						/>
 					</div>
