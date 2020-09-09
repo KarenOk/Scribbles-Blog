@@ -7,9 +7,10 @@ import deleteIcon from "../images/delete-icon.svg";
 import empty from "../images/empty.svg";
 import logo from "../logo.png";
 
-const PostPage = ({ match }) => {
+const PostPage = ({ match, token }) => {
 	const { user } = useAuth0();
 	const [post, setPost] = useState(null);
+	const [newComment, setNewComment] = useState("");
 	const [comments, setComments] = useState(null);
 	const [commentsPage, setCommentsPage] = useState(1);
 	const [loadingPost, setLoadingPost] = useState(false);
@@ -23,6 +24,10 @@ const PostPage = ({ match }) => {
 		if (post) getComments(1);
 	}, [post]);
 
+	useEffect(() => {
+		console.log(comments);
+	}, [comments]);
+
 	const getPost = (page) => {
 		setLoadingPost(true);
 		fetch(`${BASE_URL}/posts/${match.params.id}`)
@@ -31,7 +36,7 @@ const PostPage = ({ match }) => {
 				if (res.error) {
 					console.log(res.error);
 					toast.error(
-						"😞 Darn. Something went wrong while fetching this post.",
+						"😞 Uh-oh. Something went wrong while fetching this post.",
 						{
 							position: "top-center",
 							autoClose: 5000,
@@ -46,6 +51,66 @@ const PostPage = ({ match }) => {
 					setPost(res.post);
 				}
 				setLoadingPost(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Uh-oh. Something went wrong while fetching the comments for this post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
+				setLoadingPost(false);
+			});
+	};
+
+	const getComments = (page, clear = false) => {
+		if (!post) return;
+
+		setLoadingComments(true);
+		fetch(
+			`${BASE_URL}/posts/${post.id}/comments?page=${
+				clear ? page : commentsPage
+			}`
+		)
+			.then((res) => res.json())
+			.then((res) => {
+				if (res.error) {
+					console.log(res.error);
+					toast.error(
+						"😞 Darn. Something went wrong while fetching the comments for this post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					console.log(res.comments);
+					if (clear) {
+						setComments(res);
+						setCommentsPage(2);
+					} else {
+						if (comments) {
+							const temp = [...comments.comments];
+							temp.push(...res.comments);
+							setComments({ ...comments, comments: temp });
+						} else setComments(res);
+
+						setCommentsPage(commentsPage + 1);
+					}
+				}
+				setLoadingComments(false);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -65,17 +130,29 @@ const PostPage = ({ match }) => {
 			});
 	};
 
-	const getComments = (page) => {
-		if (!post) return;
+	const createComment = () => {
+		let body = {
+			full_name: user.name,
+			image_url: user.picture,
+			is_author: user["https://scribbles-blog.com/roles"][0] === "author",
+			comment: newComment,
+		};
 
-		setLoadingComments(true);
-		fetch(`${BASE_URL}/posts/${post.id}/comments?page=${commentsPage}`)
+		fetch(`${BASE_URL}/posts/${post.id}/comments`, {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		})
 			.then((res) => res.json())
 			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
+					// setLoadingComments(false);
 					toast.error(
-						"😞 Darn. Something went wrong while fetching the comments for this post.",
+						"😞 Oops. Something went wrong while publishing your comment.",
 						{
 							position: "top-center",
 							autoClose: 5000,
@@ -87,19 +164,23 @@ const PostPage = ({ match }) => {
 						}
 					);
 				} else {
-					if (comments) {
-						const temp = [...comments.comments];
-						temp.push(...res.comments);
-						setComments({ ...comments, comments: temp });
-					} else setComments(res);
-					setCommentsPage(commentsPage + 1);
+					setNewComment("");
+					getComments(1, true);
+					toast.dark("💃 Whoop! Your comment has been published.", {
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
 				}
-				setLoadingComments(false);
 			})
 			.catch((err) => {
 				console.log(err);
 				toast.error(
-					"😞 Darn. Something went wrong while fetching the comments for this post.",
+					"😞 Oops. Something went wrong while publishing your comment.",
 					{
 						position: "top-center",
 						autoClose: 5000,
@@ -110,7 +191,6 @@ const PostPage = ({ match }) => {
 						progress: undefined,
 					}
 				);
-				setLoadingComments(false);
 			});
 	};
 
@@ -183,7 +263,7 @@ const PostPage = ({ match }) => {
 					{post.no_of_comments}{" "}
 					{post.no_of_comments === 1 ? "comment" : "comments"}
 				</h3>
-				<form className="d-flex">
+				<div className="d-flex">
 					<div className="image-cont">
 						{user.picture ? (
 							<img src={user.picture} alt={user.name} />
@@ -195,9 +275,14 @@ const PostPage = ({ match }) => {
 						aria-label="Leave a comment"
 						placeholder="Leave a comment"
 						maxLength="140"
+						value={newComment}
+						onChange={(e) => setNewComment(e.target.value)}
+						onKeyUp={(e) =>
+							e.keyCode === 13 && newComment ? createComment() : null
+						}
 						required
 					/>
-				</form>
+				</div>
 
 				<div className="comments-cont">
 					{!comments || !comments.total_comments ? (
