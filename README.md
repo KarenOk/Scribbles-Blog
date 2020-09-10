@@ -16,7 +16,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
 2.  Create and select a unique tenant domain.
 3.  Under the Application tab, create a new _single page web application_
 4.  Create a new API
-    -- Under API settings, enable **RBAC** and **Add Permissions to access token**
+    - Under API settings, enable **RBAC** and **Add Permissions to access token**
 5.  Create new API permissions:
     - `create:post`
     - `update:post`
