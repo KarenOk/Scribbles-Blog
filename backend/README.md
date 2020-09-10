@@ -1,3 +1,0 @@
--- Integrate Auth0
--- Integrate CORS
--- Update comment model to include full name
