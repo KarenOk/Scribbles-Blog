@@ -52,7 +52,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
         if (user.email && user.email.toLowerCase().includes("author")){
             management.assignRolestoUser(
                 { id : user.user_id},
-                { "roles" :["rol_gkptkdAeq6oXoOfb"]},  // sample role ID of "Standard API Enduser"
+                { "roles" :["rol_role-id-of-author"]},  // replace the rol_role-id-of-author with the role ID of the Author role you created in step 6
                 function (err) {
                     if (err) {
                         console.log('Error assigning role: ' + err);
@@ -64,7 +64,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
         else{
             management.assignRolestoUser(
                 { id : user.user_id},
-                { "roles" :["rol_olkc8hNl33ncJumw"]},  // sample role ID of "Standard API Enduser"
+                { "roles" :["rol_role-id-of-author"]},   // replace the rol_role-id-of-reader with the role ID of the Author role you created in step 6
                 function (err) {
                     if (err) {
                         console.log('Error assigning role: ' + err);
@@ -76,7 +76,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
       }
       ```
 
-      The above rule assigns the **author** role to any email that contains the word _author_ and the **reader** role otherwise.
+      The above rule assigns the **author** role to any email that contains the word _author_ and the **reader** role otherwise. Remember to replace the rol_role-id-of-\* with the role IDs of the Author and Reader roles you created in step 6. The role id can be gotten from Auth0's URL for each role.
 
     - The second rule adds the user's role to the payload returned by Auth0 when a user logs in. Paste in the following code:
 
@@ -84,8 +84,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
     function setRolesToUser(user, context, callback) {
 
         user.app_metadata = user.app_metadata || {};
-        // You can add a Role based on what you want
-        // In this case I check domain
+
         const addRolesToUser = function (user) {
             if (user.email && user.email.toLowerCase().includes("author")) {
             return ['author'];
