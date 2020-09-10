@@ -38,39 +38,41 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
 
       ```
       function (user, context, callback) {
-      var count = context.stats && context.stats.loginsCount ? context.stats.loginsCount : 0;
-      if (count > 1) {
-          return callback(null, user, context);
-      }
+        var count = context.stats && context.stats.loginsCount ? context.stats.loginsCount : 0;
+        if (count > 1) {
+            return callback(null, user, context);
+        }
 
-      var ManagementClient = require('auth0@2.17.0').ManagementClient;
-      var management = new ManagementClient({
-          token: auth0.accessToken,
-          domain: auth0.domain
-      });
+        var ManagementClient = require('auth0@2.17.0').ManagementClient;
+        var management = new ManagementClient({
+            token: auth0.accessToken,
+            domain: auth0.domain
+        });
 
-      if (user.email && user.email.toLowerCase().includes("author")){
-          management.assignRolestoUser(
-          { id : user.user_id},
-          { "roles" :["rol_gkptkdAeq6oXoOfb"]},  // sample role ID of "Standard API Enduser"
-          function (err) {
-              if (err) {
-              console.log('Error assigning role: ' + err);
-              }
-              callback(null, user, context);
-          });
-      }
-      else{
-      management.assignRolestoUser(
-          { id : user.user_id},
-          { "roles" :["rol_olkc8hNl33ncJumw"]},  // sample role ID of "Standard API Enduser"
-          function (err) {
-          if (err) {
-              console.log('Error assigning role: ' + err);
-          }
-          callback(null, user, context);
-      });
-      }
+        if (user.email && user.email.toLowerCase().includes("author")){
+            management.assignRolestoUser(
+                { id : user.user_id},
+                { "roles" :["rol_gkptkdAeq6oXoOfb"]},  // sample role ID of "Standard API Enduser"
+                function (err) {
+                    if (err) {
+                        console.log('Error assigning role: ' + err);
+                    }
+                    callback(null, user, context);
+                }
+            );
+        }
+        else{
+            management.assignRolestoUser(
+                { id : user.user_id},
+                { "roles" :["rol_olkc8hNl33ncJumw"]},  // sample role ID of "Standard API Enduser"
+                function (err) {
+                    if (err) {
+                        console.log('Error assigning role: ' + err);
+                    }
+                    callback(null, user, context);
+                }
+            );
+        }
       }
       ```
 
@@ -102,7 +104,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
             .catch(function (err) {
             callback(err);
             });
-        }
+    }
     ```
 
 ### Backend
