@@ -64,7 +64,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
         else{
             management.assignRolestoUser(
                 { id : user.user_id},
-                { "roles" :["rol_role-id-of-author"]},   // replace the rol_role-id-of-reader with the role ID of the Author role you created in step 6
+                { "roles" :["rol_role-id-of-author"]},   // replace the rol_role-id-of-reader with the role ID of the Reader role you created in step 6
                 function (err) {
                     if (err) {
                         console.log('Error assigning role: ' + err);
