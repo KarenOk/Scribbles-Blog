@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "72ddc103-9740-47a5-a7e1-fc6244aa2a50",
 		"name": "Scribbles Blog",
+		"description": "This API powers the blog web application *Scribbles* .",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -329,6 +330,7 @@
 					"response": []
 				}
 			],
+			"description": "For users that have not logged in.",
 			"protocolProfileBehavior": {}
 		},
 		{
@@ -629,7 +631,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDUyZGU5ZWY1ZjAwNjdiNjg4M2EiLCJhdWQiOlsic2NyaWJibGVzLWJsb2ciLCJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE1OTk2MTA1ODcsImV4cCI6MTU5OTY5Njk4NywiYXpwIjoiVjBlRW52VXBVN0RqSDNWeTQxaTVkZmxOR0l1OFBIUFMiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiXX0.RheDphz-NfHfRpAG9W6KS1DUTNhkvClWSCCi5Lmbf1xy5Pm-M9RiaA50SzsQmEhkTBCBT2fJrz8FL5aXpeKiluozA1ep-YRUOi_ZLI7TEmFXXfXj38VniBhdbySzxj6Wyq4H3OOZxHoAsRAL9Ak-gVq0pzk06r_GtXkQlxPEQqvdFZgtWm4_vrD1s78rk64mmxaVlkBQtUpqGTuDtxxgA7VaQF9znbPeMlg6vQj1NFK9UK2u0BrTrV8HXqQoHBzM3UI-3lXdOleEEzqfuOC5AQyOb5CSqMp1wuAbPgpLIotq6DK-HzEQ676GL43DY_d76t3dm_fQuc3ztgBDZCQc-Q",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDUyZGU5ZWY1ZjAwNjdiNjg4M2EiLCJhdWQiOlsic2NyaWJibGVzLWJsb2ciLCJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE1OTk3ODcyODgsImV4cCI6MTU5OTg3MzY4OCwiYXpwIjoiVjBlRW52VXBVN0RqSDNWeTQxaTVkZmxOR0l1OFBIUFMiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiXX0.NUBAtR2qVYa7LmCQZajYY-mma3Y2UDdtdHQyB3akILdgYBLj80Fzo9l3N41cFCFQUOm9IE3RDPSN3zjDvGNnZc7UsB657XA2xvII90BdvOnBk6YCDUGMbF2aAsgaymaS0U4qsGQcGvVLUNalRGG1VJ5KuireM4VT1GYutxcpYaC8PYaqrakQQdvDJKHCy10Omjhh-4pdQuffktgnBjNkYnZaJPT1E0efbC65EoROHZSDIr_4l5qexclJIYGts5GStwdftHMlI7AizyMxwAVMhtdBggCBp2NS9oNB9ZPET1-kklccHLIDnPVyjEbJ5Yoab6w4DjYXiZbtPeZ5KEkuRw",
 						"type": "string"
 					}
 				]
@@ -956,7 +958,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2ZjlkODE0NjE2MTAwNmQyNjNkNmIiLCJhdWQiOlsic2NyaWJibGVzLWJsb2ciLCJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE1OTk2MDc2MzgsImV4cCI6MTU5OTY5NDAzOCwiYXpwIjoiVjBlRW52VXBVN0RqSDNWeTQxaTVkZmxOR0l1OFBIUFMiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiLCJjcmVhdGU6cG9zdCIsImRlbGV0ZTpjb21tZW50IiwiZGVsZXRlOnBvc3QiLCJ1cGRhdGU6cG9zdCJdfQ.SyxgPfzX37M3sJd9k6tpNi3KmJJ4zDDpt40BFB9anYBvhQwpTe-YsaRBgOtSxDcW4LjofoyXbjoGPTDosUnFNcsMl4Vdd4WWd7ACybHeTIAiFRvFiRYvBgBPTsZ58q_qvOW3OL8dDXZV2A4dO3c3nc2bmG6DXMmh3B6j4fEq6PCzIX-Sbvw7DZ6avDVCokLLpF_5eS_po5cYTEoA99-WrAL8z-2eOplFs6BHNuZBOLhkZXdPhN8yykSzYy5lidIr63tIrxHl3TXT7DiM7cT1MvDp2OEEiS7OfLy6Xwp43dRVhiZ3IV33Npd0vWkNKNM74qpm3Xk_OB0RqLpAbbVdUg",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjR0Q19NcWRNcWpZWng5TDluVHFFbCJ9.eyJpc3MiOiJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjU2MDRlZGU5ZWY1ZjAwNjdiNjg4MzUiLCJhdWQiOlsic2NyaWJibGVzLWJsb2ciLCJodHRwczovL3NjcmliYmxlcy1ibG9nLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE1OTk3ODcxMzEsImV4cCI6MTU5OTg3MzUzMSwiYXpwIjoiVjBlRW52VXBVN0RqSDNWeTQxaTVkZmxOR0l1OFBIUFMiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsiY3JlYXRlOmNvbW1lbnQiLCJjcmVhdGU6cG9zdCIsImRlbGV0ZTpjb21tZW50IiwiZGVsZXRlOnBvc3QiLCJ1cGRhdGU6cG9zdCJdfQ.JjmjuOOHhpcGSm03Nb25O5L2DxZXt80O-FkekzMgCIr1cvnpx4WdYfUZ2o2NoxIyTXK7-Ua95qNeCBa0OjqTWW63rhic5gEjmSzh-lmIlbSooS_vtltd_jfqRS6UI-sRt9k2YXP6JAUhDgohlRTI3LsUpGomtmtACwUC_2DTe35IKSvR7C6CUaMlahZW_UXXvopzs7krYPWAFjMUgiLwfakRy-WnayC6leAsnTofN1uBPRs7q035_mp19zXg-Oqu10o27dTOS_WYtnplX058DIc1mNzEYZu56J2mGQZ5Gp8SVgsPd7xz3hSG6HrxXxq5RfR410n_ZnWnq9ok0SK9uA",
 						"type": "string"
 					}
 				]
@@ -1010,7 +1012,7 @@
 	],
 	"variable": [
 		{
-			"id": "71cf48db-cb68-4b36-a14b-2e9ecd8e86fa",
+			"id": "206a9fc4-ca68-4f5e-9ba3-e1a7ae85dc4b",
 			"key": "host",
 			"value": "localhost:5000"
 		}
