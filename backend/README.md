@@ -67,3 +67,7 @@ export JWT="the-jwt-token-for-an-author"
     createdb scribbles_blog_test
     python test_flaskr.py
 ```
+
+## API Reference
+
+Find the [API documentation](https://araniera.stoplight.io/docs/scribbles-blog/reference/Scribbles.v1.yaml) here.
