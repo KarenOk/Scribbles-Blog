@@ -2,7 +2,7 @@
 
 Scribbles is a full stack blog application written using Flask and React. Its allows authors manage blog posts while readers can read and comment on each blog post. The blog posts are also available to users that are not logged in, but they are limited to just reading - they can't comment.
 
-Click here to view the hosted [Scribbles web application](http://scribbles-blog.netlify.app). The backend API is hosted on Heroku and can be accessed using the following BASE_URL - `http://scribbles-blog.netlify.app`. Click here to view the [Scribbles API documentation](https://araniera.stoplight.io/docs/scribbles-blog/reference/Scribbles.v1.yaml).
+Click here to view the hosted [Scribbles web application](http://scribbles-blog.netlify.app). The backend API is hosted on Heroku and can be accessed using the following BASE_URL - `http://scribbles-blog-api.herokuapp.com`. Click here to view the [Scribbles API documentation](https://araniera.stoplight.io/docs/scribbles-blog/reference/Scribbles.v1.yaml).
 
 ## Getting Started (Run Locally)
 
