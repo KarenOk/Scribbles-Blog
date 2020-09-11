@@ -25,7 +25,7 @@ Find steps to install and [get started with PostgreSQL](https://www.postgresqltu
 From within the `./backend` directory, first ensure you are working using your created virtual environment. Then, export the required environment variables in your terminal. Run the following commands after updating the values accordingly:
 
 ```
-export DATABASE_URL='postgres://postgres:postgres@localhost:5432/scribbles_blog'
+export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/scribbles_blog'
 export API_AUDIENCE="your-auth0-custom-api-audience"
 export AUTH0_DOMAIN="your-auth0-tenant-domain"
 export FLASK_APP=app.py
@@ -38,17 +38,18 @@ After setting the above environment variables, run `flask run` to start the serv
 
 To test the application, a [postman collection](./Scribbles-Blog.postman_collection.json) has been provided together with a [python test script](./test_app.py).
 
-Before running with any of them, run the following commands first:
+Before running with any of them,
 
-```
-export DATABASE_URL='postgres://postgres:postgres@localhost:5432/scribbles_blog_test'
-export API_AUDIENCE="your-auth0-custom-api-audience"
-export AUTH0_DOMAIN="your-auth0-tenant-domain"
-export FLASK_APP=app.py
-export FLASK_ENV=development
-```
-
-Both require you to register 2 users - assign the Author role to one and Reader role to the other. Sign into each account and make note of their JWTs.
+- Ensure your working in a virtual environment and that you're in the `./backend` folder.
+- Run the following commands
+  ```
+  export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/scribbles_blog_test'
+  export API_AUDIENCE="your-auth0-custom-api-audience"
+  export AUTH0_DOMAIN="your-auth0-tenant-domain"
+  export FLASK_APP=app.py
+  export FLASK_ENV=development
+  ```
+- Both require you to register 2 users - assign the Author role to one and Reader role to the other. Sign into each account and make note of their JWTs.
 
 ### Testing with Postman
 
