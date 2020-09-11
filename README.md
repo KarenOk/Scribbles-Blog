@@ -117,3 +117,7 @@ The `./backend` directory contains a completed Flask application. You would need
 The `./frontend` directory contains a completed ReactJS web application that consumes the data from the Flask server. You would also need to set up some environment variables to run the frontend application successfully.
 
 [Find the steps to set up the front-end web application locally in the front-end's README](./frontend/README.md)/
+
+## Author
+
+Karen Okonkwo
