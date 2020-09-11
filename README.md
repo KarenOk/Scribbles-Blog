@@ -87,7 +87,7 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
 
         const addRolesToUser = function (user) {
             if (user.email && user.email.toLowerCase().includes("author")) {
-            return ['author'];
+                return ['author'];
             }
             return ['reader'];
         };
@@ -97,11 +97,11 @@ This project makes use of **ReactJS** and **Node** for the frontend, with **Flas
         user.app_metadata.roles = roles;
         auth0.users.updateAppMetadata(user.user_id, user.app_metadata)
             .then(function () {
-            context.idToken['https://scribbles-blog.com/roles'] = user.app_metadata.roles;
-            callback(null, user, context);
+                context.idToken['https://scribbles-blog.com/roles'] = user.app_metadata.roles;
+                callback(null, user, context);
             })
             .catch(function (err) {
-            callback(err);
+                callback(err);
             });
     }
     ```
