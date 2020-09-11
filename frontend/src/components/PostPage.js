@@ -210,7 +210,6 @@ const PostPage = ({ match, token, history }) => {
 			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
-					// setLoadingComments(false);
 					toast.error(
 						"😞 Bummer. Something went wrong while editing your post.",
 						{
@@ -225,6 +224,8 @@ const PostPage = ({ match, token, history }) => {
 					);
 				} else {
 					console.log(res);
+					setComments(null);
+					setCommentsPage(1);
 					getPost();
 					toast.dark("💃 Whoop! Your post has been edited.", {
 						position: "top-center",
