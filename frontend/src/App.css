@@ -725,6 +725,10 @@ footer a:hover {
     .post-page header h2 {
         font-size: 2.5em;
     }
+    .post-page header button img {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 @media only screen and (max-width: 500px) {
