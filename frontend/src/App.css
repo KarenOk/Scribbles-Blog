@@ -204,7 +204,7 @@ nav .social img {
     margin-right: 10px;
 }
 
-.post-item img {
+.post-item img.author {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -231,6 +231,10 @@ nav .social img {
     margin: 0;
     font-size: inherit;
     color: black;
+}
+
+.post-item .intro img {
+    width: 100% !important;
 }
 
 .post-item .read-more {

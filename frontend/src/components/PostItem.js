@@ -9,7 +9,7 @@ const PostItem = ({ post }) => {
 			<section className="header d-flex align-items-center">
 				<div className="image-cont">
 					{post.image_url ? (
-						<img src={post.image_url} alt={post.author} />
+						<img src={post.image_url} alt={post.author} className="author" />
 					) : (
 						<div />
 					)}
@@ -29,13 +29,10 @@ const PostItem = ({ post }) => {
 			</p>
 
 			<div
-				className="intro"
+				className="intro .truncate-overflow"
 				dangerouslySetInnerHTML={{
 					__html: sanitizeHtml(post.content, {
-						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-						allowedAttributes: {
-							img: ["src", "style", "alt"],
-						},
+						allowedTags: [],
 					}),
 				}}
 			></div>
