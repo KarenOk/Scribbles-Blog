@@ -233,10 +233,6 @@ nav .social img {
     color: black;
 }
 
-.post-item .intro img {
-    width: 100% !important;
-}
-
 .post-item .read-more {
     display: block;
     margin-top: 10px;
@@ -402,6 +398,11 @@ nav .social img {
 
 .post-page .content h3 {
     font-size: 1.1em;
+}
+
+.post-page .content img {
+    max-width: 100% !important;
+    height: auto !important;
 }
 
 .post-page .content img[style*="left"] {
