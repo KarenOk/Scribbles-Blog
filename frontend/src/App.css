@@ -384,6 +384,8 @@ nav .social img {
     margin: 20px 0;
 }
 
+/* Style post elements */
+
 .post-page .content {
     line-height: 25px;
 }
@@ -405,6 +407,14 @@ nav .social img {
     height: auto !important;
 }
 
+.post-page .content a {
+    color: rgb(1, 1, 126);
+}
+
+.post-page .content a:hover {
+    text-decoration: underline;
+}
+
 .post-page .content img[style*="left"] {
     margin: 0 20px 20px 0 !important;
 }
@@ -412,6 +422,8 @@ nav .social img {
 .post-page .content img[style*="right"] {
     margin: 0 0 20px 20px !important;
 }
+
+/* End style post elements */
 
 .post-page .comments {
     margin-top: 30px;
@@ -551,7 +563,7 @@ nav .social img {
  */
 
 .rodal-dialog {
-    max-width: 500px;
+    max-width: 800px;
     width: 90%;
     height: 90vh;
     overflow-y: scroll;
