@@ -16,7 +16,7 @@ const Header = ({ showCreatePost }) => {
 				<img src={logo} alt="Scribbles" />
 				<h1> Scribbles </h1>
 			</div>
-			<p> DOCUMENT YOUR THOUGHTS AND MUSINGS...</p>
+			<p> DOCUMENTED THOUGHTS AND MUSINGS...</p>
 			<nav>
 				<div className="routes">
 					<NavLink to="/">POSTS</NavLink>
