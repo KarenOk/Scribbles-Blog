@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../BASE_URL";
-import Markdown from "markdown-to-jsx";
 import { formattedDateComment, formattedDatePost } from "../utils";
 import editIcon from "../images/edit-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
@@ -418,16 +417,17 @@ const PostPage = ({ match, token, history }) => {
 				</small>
 			</header>
 
-			<section className="content">
-				<Markdown
-					children={sanitizeHtml(post.content, {
+			<section
+				className="content"
+				dangerouslySetInnerHTML={{
+					__html: sanitizeHtml(post.content, {
 						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
 						allowedAttributes: {
 							img: ["src", "style", "alt"],
 						},
-					})}
-				/>
-			</section>
+					}),
+				}}
+			></section>
 
 			<section className="comments">
 				<h3>

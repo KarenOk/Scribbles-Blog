@@ -1,5 +1,4 @@
 import React from "react";
-import Markdown from "markdown-to-jsx";
 import { formattedDatePost, formattedTime } from "../utils";
 
 const sanitizeHtml = require("sanitize-html");
@@ -29,9 +28,17 @@ const PostItem = ({ post }) => {
 				with <span className="highlight"> {post.no_of_comments} </span> comments
 			</p>
 
-			<div className="intro">
-				<Markdown children={sanitizeHtml(post.content)} />
-			</div>
+			<div
+				className="intro"
+				dangerouslySetInnerHTML={{
+					__html: sanitizeHtml(post.content, {
+						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+						allowedAttributes: {
+							img: ["src", "style", "alt"],
+						},
+					}),
+				}}
+			></div>
 
 			<p className="read-more">Read more</p>
 		</article>
