@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../BASE_URL";
+import Markdown from "markdown-to-jsx";
 import { formattedDateComment, formattedDatePost } from "../utils";
 import editIcon from "../images/edit-icon.svg";
 import deleteIcon from "../images/delete-icon.svg";
@@ -9,6 +10,8 @@ import empty from "../images/empty.svg";
 import logo from "../logo.png";
 import ManagePost from "./ManagePost";
 import ConfirmDelete from "./ConfirmDelete";
+
+const sanitizeHtml = require("sanitize-html");
 
 const PostPage = ({ match, token, history }) => {
 	const { user } = useAuth0();
@@ -31,38 +34,44 @@ const PostPage = ({ match, token, history }) => {
 		if (post) getComments(1);
 	}, [post]);
 
-	const getPost = page => {
+	const getPost = (page) => {
 		setLoadingPost(true);
 		fetch(`${BASE_URL}/posts/${match.params.id}`)
-			.then(res => res.json())
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
-					toast.error("😞 Uh-oh. Something went wrong while fetching this post.", {
+					toast.error(
+						"😞 Uh-oh. Something went wrong while fetching this post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
+				} else {
+					setPost(res.post);
+				}
+				setLoadingPost(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(
+					"😞 Uh-oh. Something went wrong while fetching the comments for this post.",
+					{
 						position: "top-center",
 						autoClose: 5000,
 						hideProgressBar: false,
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
-					});
-				} else {
-					setPost(res.post);
-				}
-				setLoadingPost(false);
-			})
-			.catch(err => {
-				console.log(err);
-				toast.error("😞 Uh-oh. Something went wrong while fetching the comments for this post.", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined
-				});
+						progress: undefined,
+					}
+				);
 				setLoadingPost(false);
 			});
 	};
@@ -71,20 +80,27 @@ const PostPage = ({ match, token, history }) => {
 		if (!post) return;
 
 		setLoadingComments(true);
-		fetch(`${BASE_URL}/posts/${post.id}/comments?page=${clear ? page : commentsPage}`)
-			.then(res => res.json())
-			.then(res => {
+		fetch(
+			`${BASE_URL}/posts/${post.id}/comments?page=${
+				clear ? page : commentsPage
+			}`
+		)
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
-					toast.error("😞 Darn. Something went wrong while fetching the comments for this post.", {
-						position: "top-center",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined
-					});
+					toast.error(
+						"😞 Darn. Something went wrong while fetching the comments for this post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
 				} else {
 					if (clear) {
 						setComments(res);
@@ -101,17 +117,20 @@ const PostPage = ({ match, token, history }) => {
 				}
 				setLoadingComments(false);
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
-				toast.error("😞 Darn. Something went wrong while fetching the comments for this post.", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined
-				});
+				toast.error(
+					"😞 Darn. Something went wrong while fetching the comments for this post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 				setLoadingComments(false);
 			});
 	};
@@ -121,7 +140,7 @@ const PostPage = ({ match, token, history }) => {
 			full_name: user.name,
 			image_url: user.picture,
 			is_author: role === "author",
-			comment: newComment
+			comment: newComment,
 		};
 
 		fetch(`${BASE_URL}/posts/${post.id}/comments`, {
@@ -129,23 +148,26 @@ const PostPage = ({ match, token, history }) => {
 			body: JSON.stringify(body),
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			}
+				Authorization: `Bearer ${token}`,
+			},
 		})
-			.then(res => res.json())
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
 					// setLoadingComments(false);
-					toast.error("😞 Oops. Something went wrong while publishing your comment.", {
-						position: "top-center",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined
-					});
+					toast.error(
+						"😞 Oops. Something went wrong while publishing your comment.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
 				} else {
 					getComments(1, true);
 					toast.dark("💃 Whoop! Your comment has been published.", {
@@ -155,25 +177,28 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
-				toast.error("😞 Oops. Something went wrong while publishing your comment.", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined
-				});
+				toast.error(
+					"😞 Oops. Something went wrong while publishing your comment.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 			});
 	};
 
-	const editPost = body => {
+	const editPost = (body) => {
 		body.image_url = post.image_url;
 		body.full_name = post.author;
 
@@ -182,22 +207,25 @@ const PostPage = ({ match, token, history }) => {
 			body: JSON.stringify(body),
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
-			}
+				Authorization: `Bearer ${token}`,
+			},
 		})
-			.then(res => res.json())
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
-					toast.error("😞 Bummer. Something went wrong while editing your post.", {
-						position: "top-center",
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined
-					});
+					toast.error(
+						"😞 Bummer. Something went wrong while editing your post.",
+						{
+							position: "top-center",
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+						}
+					);
 				} else {
 					console.log(res);
 					setComments(null);
@@ -210,21 +238,24 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
-				toast.error("😞 Bummer. Something went wrong while editing your post.", {
-					position: "top-center",
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined
-				});
+				toast.error(
+					"😞 Bummer. Something went wrong while editing your post.",
+					{
+						position: "top-center",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					}
+				);
 			});
 	};
 
@@ -232,11 +263,11 @@ const PostPage = ({ match, token, history }) => {
 		fetch(`${BASE_URL}/posts/${match.params.id}`, {
 			method: "DELETE",
 			headers: {
-				Authorization: `Bearer ${token}`
-			}
+				Authorization: `Bearer ${token}`,
+			},
 		})
-			.then(res => res.json())
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
 					toast.error("😞 Uh-oh. Your post could not be deleted.", {
@@ -246,7 +277,7 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 				} else {
 					toast.success("💃 Yes! Your post was deleted.", {
@@ -256,12 +287,12 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 					history.push("/");
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 				toast.error("😞 Uh-oh. Your post could not be deleted.", {
 					position: "top-center",
@@ -270,20 +301,20 @@ const PostPage = ({ match, token, history }) => {
 					closeOnClick: true,
 					pauseOnHover: true,
 					draggable: true,
-					progress: undefined
+					progress: undefined,
 				});
 			});
 	};
 
-	const deleteComment = comment_id => {
+	const deleteComment = (comment_id) => {
 		fetch(`${BASE_URL}/comments/${comment_id}`, {
 			method: "DELETE",
 			headers: {
-				Authorization: `Bearer ${token}`
-			}
+				Authorization: `Bearer ${token}`,
+			},
 		})
-			.then(res => res.json())
-			.then(res => {
+			.then((res) => res.json())
+			.then((res) => {
 				if (res.error) {
 					console.log(res.error);
 					toast.error("😞 Uh-oh. This comment could not be deleted.", {
@@ -293,7 +324,7 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 				} else {
 					toast.success("💃 Yes! The comment was deleted successfully.", {
@@ -303,12 +334,12 @@ const PostPage = ({ match, token, history }) => {
 						closeOnClick: true,
 						pauseOnHover: true,
 						draggable: true,
-						progress: undefined
+						progress: undefined,
 					});
 					getComments(1, true);
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err);
 				toast.error("😞 Uh-oh. This comment could not be deleted.", {
 					position: "top-center",
@@ -317,7 +348,7 @@ const PostPage = ({ match, token, history }) => {
 					closeOnClick: true,
 					pauseOnHover: true,
 					draggable: true,
-					progress: undefined
+					progress: undefined,
 				});
 			});
 	};
@@ -346,7 +377,11 @@ const PostPage = ({ match, token, history }) => {
 				<div className="top d-flex justify-space-between align-items-center ">
 					<div className="d-flex align-items-center">
 						<div className="image-cont">
-							{post.image_url ? <img src={post.image_url} alt={post.author} className="user" /> : <div />}
+							{post.image_url ? (
+								<img src={post.image_url} alt={post.author} className="user" />
+							) : (
+								<div />
+							)}
 						</div>
 						<div>
 							<p className="highlight"> {post.author} </p>
@@ -355,7 +390,10 @@ const PostPage = ({ match, token, history }) => {
 					</div>
 					{role === "author" && (
 						<div className="actions">
-							<button title="Edit this post" onClick={() => setShowManagePost(true)}>
+							<button
+								title="Edit this post"
+								onClick={() => setShowManagePost(true)}
+							>
 								<img src={editIcon} alt="Edit post" />
 							</button>
 							<button
@@ -363,7 +401,7 @@ const PostPage = ({ match, token, history }) => {
 								onClick={() => {
 									setDeleteInfo({
 										type: "post",
-										onConfirm: deletePost
+										onConfirm: deletePost,
 									});
 									setShowConfirmDelete(true);
 								}}
@@ -373,33 +411,47 @@ const PostPage = ({ match, token, history }) => {
 						</div>
 					)}
 				</div>
-				<h2>{post.title}</h2>
+				<h1 className="original">{post.title}</h1>
 				<small>
 					Last modified at
 					<span className="highlight"> {post.last_modified} </span>
 				</small>
 			</header>
 
-			<section className="content">{post.content}</section>
+			<section className="content">
+				<Markdown
+					children={sanitizeHtml(post.content, {
+						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+						allowedAttributes: {
+							img: ["src", "style", "alt"],
+						},
+					})}
+				/>
+			</section>
 
 			<section className="comments">
 				<h3>
 					{comments
-						? comments.total_comments + (comments.total_comments === 1 ? " comment" : " comments")
+						? comments.total_comments +
+						  (comments.total_comments === 1 ? " comment" : " comments")
 						: "0 comments"}
 				</h3>
 				{role ? (
 					<div className="d-flex">
 						<div className="image-cont">
-							{user.picture ? <img src={user.picture} alt={user.name} /> : <div />}
+							{user.picture ? (
+								<img src={user.picture} alt={user.name} />
+							) : (
+								<div />
+							)}
 						</div>
 						<input
 							aria-label="Leave a comment"
 							placeholder="Leave a comment"
 							maxLength="140"
 							value={newComment}
-							onChange={e => setNewComment(e.target.value)}
-							onKeyUp={e => {
+							onChange={(e) => setNewComment(e.target.value)}
+							onKeyUp={(e) => {
 								if (e.keyCode === 13 && newComment) {
 									createComment();
 									setNewComment("");
@@ -416,11 +468,15 @@ const PostPage = ({ match, token, history }) => {
 					{!comments || !comments.total_comments ? (
 						<p> No comments found </p>
 					) : (
-						comments.comments.map(comment => (
+						comments.comments.map((comment) => (
 							<div className="comment-box d-flex" key={comment.id}>
 								<div className="image-cont">
 									{comment.image_url ? (
-										<img src={comment.image_url} alt={comment.full_name} className="user" />
+										<img
+											src={comment.image_url}
+											alt={comment.full_name}
+											className="user"
+										/>
 									) : (
 										<div />
 									)}
@@ -428,7 +484,10 @@ const PostPage = ({ match, token, history }) => {
 								<div>
 									<p className="info">
 										{comment.full_name}{" "}
-										<small> {formattedDateComment(comment.date_created)} </small>{" "}
+										<small>
+											{" "}
+											{formattedDateComment(comment.date_created)}{" "}
+										</small>{" "}
 										{comment.is_author && <mark> Author </mark>}
 									</p>
 									<p className="comment"> {comment.comment}</p>
@@ -439,12 +498,16 @@ const PostPage = ({ match, token, history }) => {
 											onClick={() => {
 												setDeleteInfo({
 													type: "comment",
-													onConfirm: () => deleteComment(comment.id)
+													onConfirm: () => deleteComment(comment.id),
 												});
 												setShowConfirmDelete(true);
 											}}
 										>
-											<img src={deleteIcon} alt="Delete comment" className="icon" />
+											<img
+												src={deleteIcon}
+												alt="Delete comment"
+												className="icon"
+											/>
 										</button>
 									</div>
 								)}
@@ -453,7 +516,9 @@ const PostPage = ({ match, token, history }) => {
 					)}
 				</div>
 				{(comments && !comments.comments.length) ||
-				(comments && comments.comments.length !== 0 && comments.total_comments <= comments.comments.length) ? (
+				(comments &&
+					comments.comments.length !== 0 &&
+					comments.total_comments <= comments.comments.length) ? (
 					<div />
 				) : (
 					<div className="load">

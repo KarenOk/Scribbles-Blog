@@ -7,13 +7,16 @@
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.3.2",
 		"@testing-library/user-event": "^7.1.2",
+		"ckeditor4-react": "^1.4.0",
+		"markdown-to-jsx": "^7.1.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-paginate": "^6.4.0",
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.3",
 		"react-toastify": "^6.0.8",
-		"rodal": "^1.8.1"
+		"rodal": "^1.8.1",
+		"sanitize-html": "^2.3.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",

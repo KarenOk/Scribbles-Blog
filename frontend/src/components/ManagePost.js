@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Rodal from "rodal";
+import Editor from "./Editor";
 
 function ManagePost({ mode, visible, close, post, createPost, editPost }) {
 	const [title, setTitle] = useState("");
@@ -14,7 +15,6 @@ function ManagePost({ mode, visible, close, post, createPost, editPost }) {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log("entered");
 		if (!title || !content) return;
 		if (title.length > 50) return;
 
@@ -50,13 +50,7 @@ function ManagePost({ mode, visible, close, post, createPost, editPost }) {
 
 				<div className="form-group">
 					<label htmlFor="title"> Post Content </label>
-					<textarea
-						id={`manage-post-${title}`}
-						name="content"
-						required
-						value={content}
-						onChange={(e) => setContent(e.target.value)}
-					></textarea>
+					<Editor content={content} setContent={setContent} />
 				</div>
 			</form>
 

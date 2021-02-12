@@ -226,6 +226,11 @@ nav .social img {
     text-overflow: ellipsis;
 }
 
+.post-item .intro * {
+    font-weight: normal;
+    margin: 0;
+}
+
 .post-item .read-more {
     display: block;
     margin-top: 10px;
@@ -258,25 +263,21 @@ nav .social img {
 .manage-post label {
     display: block;
     font-size: 1.3em;
+    margin-bottom: 10px;
 }
 
 .manage-post .form-group {
-    margin: 10px 0;
+    margin: 10px 0 20px;
 }
 
-.manage-post input, .manage-post textarea {
+.manage-post input {
     width: 100%;
-    margin: 10px 0 10px;
     box-sizing: border-box;
     padding: 10px;
 }
 
 .manage-post input {
     height: 40px;
-}
-
-.manage-post textarea {
-    min-height: 200px;
 }
 
 .manage-post .actions {
@@ -370,7 +371,7 @@ nav .social img {
     cursor: pointer;
 }
 
-.post-page h2 {
+.post-page h1.original {
     font-family: 'Grandstander', cursive;
     font-size: 3em;
     text-transform: uppercase;
@@ -382,8 +383,27 @@ nav .social img {
 }
 
 .post-page .content {
-    white-space: pre-line;
     line-height: 25px;
+}
+
+.post-page .content h1 {
+    font-size: 2em;
+}
+
+.post-page .content h2 {
+    font-size: 1.5em;
+}
+
+.post-page .content h3 {
+    font-size: 1.1em;
+}
+
+.post-page .content img[style*="left"] {
+    margin: 0 20px 20px 0 !important;
+}
+
+.post-page .content img[style*="right"] {
+    margin: 0 0 20px 20px !important;
 }
 
 .post-page .comments {
