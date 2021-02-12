@@ -391,15 +391,15 @@ nav .social img {
 }
 
 .post-page .content h1 {
-    font-size: 2em;
+    font-size: 2.5em;
 }
 
 .post-page .content h2 {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 .post-page .content h3 {
-    font-size: 1.1em;
+    font-size: 1.5em;
 }
 
 .post-page .content img {
@@ -421,6 +421,12 @@ nav .social img {
 
 .post-page .content img[style*="right"] {
     margin: 0 0 20px 20px !important;
+}
+
+.post-page .content code {
+    color: rgb(199, 37, 78);
+    background-color: rgb(249, 242, 244);
+    border-radius: 4px;
 }
 
 /* End style post elements */
