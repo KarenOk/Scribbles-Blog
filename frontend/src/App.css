@@ -229,6 +229,8 @@ nav .social img {
 .post-item .intro * {
     font-weight: normal;
     margin: 0;
+    font-size: inherit;
+    color: black;
 }
 
 .post-item .read-more {
