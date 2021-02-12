@@ -427,6 +427,8 @@ nav .social img {
     color: rgb(199, 37, 78);
     background-color: rgb(249, 242, 244);
     border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
 }
 
 /* End style post elements */
@@ -752,6 +754,5 @@ footer a:hover {
     }
     .post-page .comments .image-cont {
         align-self: flex-start;
-        margin-top: 15px;
     }
 }
