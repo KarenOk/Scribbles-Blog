@@ -421,9 +421,10 @@ const PostPage = ({ match, token, history }) => {
 				className="content"
 				dangerouslySetInnerHTML={{
 					__html: sanitizeHtml(post.content, {
-						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+						allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "a"]),
 						allowedAttributes: {
 							img: ["src", "style", "alt"],
+							a: ["href", "name"],
 						},
 					}),
 				}}
